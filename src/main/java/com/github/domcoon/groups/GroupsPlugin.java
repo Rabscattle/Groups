@@ -5,6 +5,7 @@ import com.github.domcoon.groups.commands.GroupCommands;
 import com.github.domcoon.groups.commands.RankCommand;
 import com.github.domcoon.groups.commands.UserCommands;
 import com.github.domcoon.groups.configuration.PluginConfiguration;
+import com.github.domcoon.groups.lang.MessageFactory;
 import com.github.domcoon.groups.listener.ChatListener;
 import com.github.domcoon.groups.listener.UserListener;
 import com.github.domcoon.groups.model.group.GroupManager;
@@ -20,6 +21,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class GroupsPlugin extends JavaPlugin {
     private PluginConfiguration pluginConfiguration;
+    private MessageFactory messageFactory;
     private PaperCommandManager commandManager;
     private GroupManager groupManager;
     private UserManager userManager;
@@ -29,12 +31,14 @@ public final class GroupsPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         this.pluginConfiguration = new PluginConfiguration(this);
+        this.messageFactory = new MessageFactory(this);
         this.commandManager = new PaperCommandManager(this);
         this.storage = new Storage(this);
         this.groupManager = new GroupManager(this.storage, this);
         this.userManager = new UserManager(this.storage, this);
         this.placeholderManager = new PlaceholderManager(this);
 
+        this.messageFactory.reloadLanguages();
         this.pluginConfiguration.reloadConfiguration();
 
         try {
@@ -69,8 +73,7 @@ public final class GroupsPlugin extends JavaPlugin {
     }
 
     public void sendLocalizedMessage(CommandSender sender, String message, PlaceholderPair... pairs) {
-        // For now
-        sender.sendMessage(message);
+        this.messageFactory.sendMessage(sender, message, pairs);
     }
 
     public PluginConfiguration getPluginConfiguration() {

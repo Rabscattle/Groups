@@ -1,6 +1,7 @@
 package com.github.domcoon.groups.lang.messagesimpl;
 
 import com.github.domcoon.groups.lang.Message;
+import com.github.domcoon.groups.placeholders.PlaceholderPair;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -29,7 +30,7 @@ public class TitleMessage implements Message {
     }
 
     @Override
-    public void sendMessage(CommandSender sender) {
+    public void sendMessage(CommandSender sender, PlaceholderPair[] values) {
         if (!(sender instanceof Player)) return;
         ((Player) sender).sendTitle(title, subtitle, fadeIn, stay, fadeOut);
     }

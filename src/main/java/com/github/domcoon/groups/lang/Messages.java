@@ -2,6 +2,7 @@ package com.github.domcoon.groups.lang;
 
 import com.github.domcoon.groups.lang.messagesimpl.ChatMessage;
 import com.github.domcoon.groups.lang.messagesimpl.TitleMessage;
+import com.github.domcoon.groups.placeholders.PlaceholderPair;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -25,9 +26,9 @@ public class Messages {
         return messages;
     }
 
-    public void sendMessage(CommandSender sender) {
+    public void sendMessage(CommandSender sender, PlaceholderPair[] values) {
         for (Message message : messageCollection) {
-            message.sendMessage(sender);
+            message.sendMessage(sender, values);
         }
     }
 }
