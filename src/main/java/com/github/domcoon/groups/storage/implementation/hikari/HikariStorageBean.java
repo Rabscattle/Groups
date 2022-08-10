@@ -1,10 +1,14 @@
-package com.github.domcoon.groups.storage.implementation;
+package com.github.domcoon.groups.storage.implementation.hikari;
 
+import com.github.domcoon.groups.PrefixedException;
 import com.github.domcoon.groups.configuration.ConfigBean;
 import com.zaxxer.hikari.HikariConfig;
 import org.bukkit.configuration.ConfigurationSection;
 
+import java.util.Arrays;
+
 public class HikariStorageBean implements ConfigBean {
+    private HikariStorageType type;
     private String url;
     private int port;
     private String pass;
@@ -13,13 +17,19 @@ public class HikariStorageBean implements ConfigBean {
 
     @Override
     public String getSection() {
-        return "hikari-storage";
+        return "storage";
     }
 
     @Override
     public void loadConfiguration(ConfigurationSection cs) {
         if (cs == null)
             return;
+
+        try {
+            this.type = HikariStorageType.valueOf(cs.getString("type", "MARIADB"));
+        } catch (Exception e) {
+            throw new PrefixedException("Invalid Storage Type. Options are: %s".formatted(Arrays.toString(HikariStorageType.values())));
+        }
 
         this.url = cs.getString("url", "");
         this.port = cs.getInt("port", 3306);
@@ -29,9 +39,6 @@ public class HikariStorageBean implements ConfigBean {
     }
 
     public void fillHikariConfig(HikariConfig config) {
-        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        config.setJdbcUrl("jdbc:mysql://%s:%d/%s".formatted(url, port, db));
-        config.setUsername(user);
-        config.setPassword(pass);
+        this.type.fillConfig(config, url, port, db, user, pass);
     }
 }

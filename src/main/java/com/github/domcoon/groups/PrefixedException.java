@@ -9,7 +9,7 @@ public class PrefixedException extends RuntimeException {
 
     @SafeVarargs
     public PrefixedException(String message, Pair<String, String>... placeholder) {
-        super(ChatColor.RED + "(!) " + message);
+        super(message);
         this.vals = placeholder;
     }
 

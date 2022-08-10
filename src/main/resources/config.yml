@@ -1,0 +1,19 @@
+# This will reformat your chat messages
+# Placeholders you can use:
+# => {player_group_prefix}
+# => {player_group_name}
+# ...
+chat:
+  enabled: true
+  format: "{player_group_prefix} %s > %s"
+
+storage:
+  # Options are MYSQL & MARIADB
+  type: MARIADB
+  url: "localhost"
+  port: 3306
+  # Your database must be created before you run this plugin
+  db: test
+  user: test
+  password: test
+

@@ -1,25 +1,18 @@
 package com.github.domcoon.groups.model.node;
 
-public class Node {
-    private final String key;
-    private final boolean value;
-    private final long expiring;
+public interface Node {
+    String getPermission();
 
-    public Node(String key, boolean value, long expiring) {
-        this.key = key;
-        this.value = value;
-        this.expiring = expiring;
-    }
+    boolean getValue();
 
-    public String getKey() {
-        return key;
-    }
+    long getExpiringDate();
 
-    public boolean isValue() {
-        return value;
-    }
+    void setExpiringDate(long expiringDate);
 
-    public long getExpiring() {
-        return expiring;
-    }
+    boolean isExpired();
+
+    long getTimeLeft();
+
+    void setValue(boolean value);
+
 }

@@ -1,8 +1,7 @@
 CREATE TABLE `users`
 (
-    `uuid`          VARCHAR(36) NOT NULL,
-    `username`      VARCHAR(16) NOT NULL,
-    `primary_group` VARCHAR(36) NOT NULL,
+    `uuid`     VARCHAR(36) NOT NULL,
+    `username` VARCHAR(16) NOT NULL,
     PRIMARY KEY (`uuid`)
 );
 
@@ -20,7 +19,6 @@ CREATE INDEX `user_permissions_uuid` ON `user_permissions` (`uuid`);
 CREATE TABLE `groups`
 (
     `name`   VARCHAR(36) NOT NULL,
-    `weight` INT DEFAULT 0,
     PRIMARY KEY (`name`)
 );
 

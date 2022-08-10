@@ -8,6 +8,7 @@ version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    jcenter()
     maven {
         name = 'spigotmc-repo'
         url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
@@ -30,6 +31,14 @@ dependencies {
     // Storage
     implementation 'com.zaxxer:HikariCP:5.0.1'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.30'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.2'
+
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 def targetJavaVersion = 17
