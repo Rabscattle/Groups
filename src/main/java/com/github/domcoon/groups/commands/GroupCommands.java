@@ -14,8 +14,8 @@ import org.bukkit.entity.Player;
 
 import java.time.format.DateTimeParseException;
 
-@CommandAlias("group")
-@CommandPermission("groups.admin")
+@CommandAlias("groups|g group")
+@CommandPermission("groups.admin.groups")
 public class GroupCommands extends BaseCommand {
     private final GroupsPlugin plugin;
     private final GroupManager groupManager;

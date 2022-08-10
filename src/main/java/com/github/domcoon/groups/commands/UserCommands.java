@@ -8,12 +8,12 @@ import com.github.domcoon.groups.lang.LangKeys;
 import com.github.domcoon.groups.model.node.Node;
 import com.github.domcoon.groups.model.user.User;
 import com.github.domcoon.groups.model.user.UserManager;
+import com.github.domcoon.groups.placeholders.PlaceholderPair;
 import com.github.domcoon.groups.util.DurationUtil;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-@CommandAlias("user")
+@CommandAlias("groups|g user|player")
 @CommandPermission("groups.admin")
 public class UserCommands extends BaseCommand {
     public final GroupsPlugin plugin;

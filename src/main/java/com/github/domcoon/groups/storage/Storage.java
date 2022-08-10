@@ -45,6 +45,10 @@ public class Storage {
         return future(() -> this.implementation.deleteNodesFromUsers(permission));
     }
 
+    public void reload() {
+        // Not sure how to reload yet...
+    }
+
     @FunctionalInterface
     interface Runnable {
         void run() throws Exception;
