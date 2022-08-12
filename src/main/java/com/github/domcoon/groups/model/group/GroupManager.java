@@ -186,8 +186,7 @@ public class GroupManager extends AbstractManager<String, Group> implements Perm
     Group group = get(name);
 
     Collection<Node> matching = group.getPermissionCache().getMatching(PrefixNode.PREFIX_REGEX);
-    matching.forEach(
-        node -> PermissionAssist.removePermission(group, node.getPermission()));
+    matching.forEach(node -> PermissionAssist.removePermission(group, node.getPermission()));
     group.invalidate();
   }
 

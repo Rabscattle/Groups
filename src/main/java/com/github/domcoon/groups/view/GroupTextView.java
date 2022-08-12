@@ -15,8 +15,10 @@ public class GroupTextView implements GroupView {
           .getPermissionCache()
           .getAll()
           .forEach(
-              node -> sender.sendMessage(
-                  "%s-- %s %s".formatted(ChatColor.BLUE, node.getPermission(), node.getValue())));
+              node ->
+                  sender.sendMessage(
+                      "%s-- %s %s"
+                          .formatted(ChatColor.BLUE, node.getPermission(), node.getValue())));
     }
   }
 }

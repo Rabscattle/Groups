@@ -22,8 +22,7 @@ public class UserListener implements Listener {
   public void onPlayerJoin(PlayerJoinEvent event) {
     userManager
         .prepareUser(event.getPlayer())
-        .whenComplete(
-            (user, throwable) -> this.greet(event.getPlayer()));
+        .whenComplete((user, throwable) -> this.greet(event.getPlayer()));
   }
 
   private void greet(Player player) {
