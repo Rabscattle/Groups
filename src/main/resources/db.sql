@@ -18,7 +18,7 @@ CREATE INDEX `user_permissions_uuid` ON `user_permissions` (`uuid`);
 
 CREATE TABLE `groups`
 (
-    `name`   VARCHAR(36) NOT NULL,
+    `name` VARCHAR(36) NOT NULL,
     PRIMARY KEY (`name`)
 );
 

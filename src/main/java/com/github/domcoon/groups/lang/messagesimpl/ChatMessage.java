@@ -7,21 +7,21 @@ import com.google.common.base.Strings;
 import org.bukkit.command.CommandSender;
 
 public class ChatMessage implements Message {
-    private final String messageTemplate;
+  private final String messageTemplate;
 
-    public ChatMessage(String messageTemplate) {
-        this.messageTemplate = messageTemplate;
-    }
+  public ChatMessage(String messageTemplate) {
+    this.messageTemplate = messageTemplate;
+  }
 
-    @Override
-    public void sendMessage(CommandSender sender, PlaceholderPair[] values) {
-        if (!Strings.isNullOrEmpty(messageTemplate)) {
-            String message = PlaceholderUtil.replacePlaceholders(this.messageTemplate, values);
-            sender.sendMessage(message);
-        }
+  @Override
+  public void sendMessage(CommandSender sender, PlaceholderPair[] values) {
+    if (!Strings.isNullOrEmpty(messageTemplate)) {
+      String message = PlaceholderUtil.replacePlaceholders(this.messageTemplate, values);
+      sender.sendMessage(message);
     }
+  }
 
-    public String getContent() {
-        return messageTemplate;
-    }
+  public String getContent() {
+    return messageTemplate;
+  }
 }

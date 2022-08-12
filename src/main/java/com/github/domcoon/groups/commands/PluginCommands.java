@@ -11,15 +11,15 @@ import org.bukkit.command.CommandSender;
 @CommandAlias("groups|g")
 @CommandPermission("groups.admin")
 public class PluginCommands extends BaseCommand {
-    private final GroupsPlugin plugin;
+  private final GroupsPlugin plugin;
 
-    public PluginCommands(GroupsPlugin plugin) {
-        this.plugin = plugin;
-    }
+  public PluginCommands(GroupsPlugin plugin) {
+    this.plugin = plugin;
+  }
 
-    @Subcommand("reload")
-    public void reload(CommandSender sender) {
-        this.plugin.onReload();
-        this.plugin.sendLocalizedMessage(sender, LangKeys.PLUGIN_RELOADED);
-    }
+  @Subcommand("reload")
+  public void reload(CommandSender sender) {
+    this.plugin.onReload();
+    this.plugin.sendLocalizedMessage(sender, LangKeys.PLUGIN_RELOADED);
+  }
 }

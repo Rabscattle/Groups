@@ -15,25 +15,25 @@ import org.bukkit.entity.Player;
 
 @CommandAlias("language")
 public class LanguageCommands extends BaseCommand {
-    private final GroupsPlugin plugin;
-    private final MessageFactory messageFactory;
+  private final GroupsPlugin plugin;
+  private final MessageFactory messageFactory;
 
-    public LanguageCommands(GroupsPlugin plugin, MessageFactory messageFactory) {
-        this.plugin = plugin;
-        this.messageFactory = messageFactory;
-    }
+  public LanguageCommands(GroupsPlugin plugin, MessageFactory messageFactory) {
+    this.plugin = plugin;
+    this.messageFactory = messageFactory;
+  }
 
-    @Subcommand("set")
-    @CommandPermission("language.set.self")
-    @Syntax("<language-key>")
-    public void setLanguage(Player player, String language) {
-        try {
-            this.messageFactory.setLanguage(player, language);
-            this.plugin.sendLocalizedMessage(player, LangKeys.LANGUAGE_SET);
-            LanguageChangeEvent event = new LanguageChangeEvent(player, language);
-            Bukkit.getPluginManager().callEvent(event);
-        } catch (PrefixedException ex) {
-            this.plugin.sendLocalizedMessage(player, ex.getMessage(), ex.getValues());
-        }
+  @Subcommand("set")
+  @CommandPermission("language.set.self")
+  @Syntax("<language-key>")
+  public void setLanguage(Player player, String language) {
+    try {
+      this.messageFactory.setLanguage(player, language);
+      this.plugin.sendLocalizedMessage(player, LangKeys.LANGUAGE_SET);
+      LanguageChangeEvent event = new LanguageChangeEvent(player, language);
+      Bukkit.getPluginManager().callEvent(event);
+    } catch (PrefixedException ex) {
+      this.plugin.sendLocalizedMessage(player, ex.getMessage(), ex.getValues());
     }
+  }
 }

@@ -13,34 +13,39 @@ import com.github.domcoon.groups.util.Pair;
 import com.github.domcoon.groups.util.SQLScriptReader;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
 import java.io.InputStream;
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
 public class HikariStorage implements StorageImplementation {
-    /**
-     * Determines if a player is in the users table
-     */
-    private static String USER_LOADED_META = "loaded";
-
     private static final String INSERT_GROUP_QUERY = "INSERT INTO 'groups' (name) VALUES(?)";
     private static final String SELECT_GROUPS_QUERY = "SELECT * FROM 'groups'";
     private static final String DELETE_GROUP_QUERY = "DELETE FROM 'groups' WHERE 'name'=?";
     private static final String REMOVE_GROUP_NODES_QUERY = "DELETE FROM 'group_permissions' WHERE 'group'=?";
-
     private static final String SELECT_USER_QUERY = "SELECT * FROM 'users' WHERE 'uuid'=?";
     private static final String INSERT_USER_QUERY = "INSERT INTO 'users' (uuid, username) VALUES(?,?)";
     private static final String SELECT_USER_BY_NAME = "SELECT uuid FROM users WHERE 'name'=?";
     private static final String SELECT_USERS_QUERY = "SELECT * FROM 'users'";
     private static final String DELETE_USER_NODES_QUERY = "DELETE FROM 'user_permissions' WHERE 'permission'=?";
-
     private static final String LOAD_ALL_NODES_QUERY = "SELECT * FROM '{table}' WHERE '{id_row}'=?";
     private static final String UPDATE_NODE_QUERY = "UPDATE '{table}' SET 'value'=?, 'expiring'=? WHERE id=?";
     private static final String INSERT_NODE_QUERY = "INSERT INTO '{table}' ('{id_row}', permission, value, expiring) VALUES(?,?,?,?)";
     private static final String DELETE_NODE_QUERY = "DELETE FROM '{table}' WHERE 'id'=?";
     private static final String DELETE_EXPIRED_NODES_QUERY = "DELETE FROM '{table}' WHERE 'expiring'!=0 AND 'expiring'<?";
-
+    /**
+     * Determines if a player is in the users table
+     */
+    private static final String USER_LOADED_META = "loaded";
     private final HikariStorageBean storageBean = new HikariStorageBean();
     private final GroupsPlugin plugin;
     private HikariDataSource dataSource;
@@ -81,11 +86,12 @@ public class HikariStorage implements StorageImplementation {
 
     private void runDefault(Connection connection) throws Exception {
         final InputStream resource = plugin.getResource("db.sql");
-        if (resource == null)
+        if (resource == null) {
             return;
+        }
         final SQLScriptReader sqlScriptReader = new SQLScriptReader(resource);
 
-        try (final Statement statement = connection.createStatement();) {
+        try (final Statement statement = connection.createStatement()) {
             for (String query : sqlScriptReader.getQueries()) {
                 statement.addBatch(query);
             }
@@ -96,8 +102,9 @@ public class HikariStorage implements StorageImplementation {
 
     public Connection getConnection() throws SQLException {
         Connection connection = dataSource.getConnection();
-        if (connection == null)
+        if (connection == null) {
             throw new SQLException("Unable to get a connection from the pool. (getConnection returned null)");
+        }
         return connection;
     }
 
@@ -114,7 +121,7 @@ public class HikariStorage implements StorageImplementation {
     public Group createAndLoadGroup(String name) throws Exception {
         // Create Group First
         try (final Connection connection = getConnection()) {
-            try (final PreparedStatement preparedStatement = connection.prepareStatement(apply(INSERT_GROUP_QUERY));) {
+            try (final PreparedStatement preparedStatement = connection.prepareStatement(apply(INSERT_GROUP_QUERY))) {
                 preparedStatement.setString(1, name);
                 preparedStatement.execute();
             }
@@ -126,8 +133,9 @@ public class HikariStorage implements StorageImplementation {
     public Group loadGroup(String name) throws Exception {
         try (final Connection connection = getConnection()) {
             Collection<String> groups = selectAllGroups(connection);
-            if (!groups.contains(name))
+            if (!groups.contains(name)) {
                 return null;
+            }
 
             Group group = this.plugin.getGroupManager().getOrCreate(name);
 
@@ -153,8 +161,8 @@ public class HikariStorage implements StorageImplementation {
 
     private Collection<String> selectAllGroups(Connection connection) throws Exception {
         List<String> result = new ArrayList<>();
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(apply(SELECT_GROUPS_QUERY));) {
-            try (final ResultSet resultSet = preparedStatement.executeQuery();) {
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(apply(SELECT_GROUPS_QUERY))) {
+            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     final String groupName = resultSet.getString("name");
                     result.add(groupName);
@@ -193,13 +201,15 @@ public class HikariStorage implements StorageImplementation {
             }
 
             for (Node removedNode : permissionCache.getRemovedNodes()) {
-                if (removedNode instanceof StorageNode)
+                if (removedNode instanceof StorageNode) {
                     this.removeNode(connection, holder, (StorageNode) removedNode);
+                }
             }
 
             for (Node updatedNode : permissionCache.getChangedNodes()) {
-                if (updatedNode instanceof StorageNode)
+                if (updatedNode instanceof StorageNode) {
                     this.updateNode(connection, holder, (StorageNode) updatedNode);
+                }
             }
 
             permissionCache.getAddedNodes().clear();
@@ -294,17 +304,18 @@ public class HikariStorage implements StorageImplementation {
                 }
             }
 
-            if (found == null)
+            if (found == null) {
                 return null;
+            }
 
             return loadUser(found, name);
         }
     }
 
     private UUID getUUIDByName(Connection connection, String name) throws SQLException {
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(apply(SELECT_USER_BY_NAME));) {
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(apply(SELECT_USER_BY_NAME))) {
             preparedStatement.setString(1, name);
-            try (final ResultSet resultSet = preparedStatement.executeQuery();) {
+            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     return UUID.fromString(resultSet.getString("uuid"));
                 }
@@ -337,8 +348,9 @@ public class HikariStorage implements StorageImplementation {
         try (PreparedStatement statement = connection.prepareStatement(apply(SELECT_USER_QUERY))) {
             statement.setString(1, user.toString());
             try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next())
+                if (resultSet.next()) {
                     return true;
+                }
             }
         }
         return false;
@@ -346,8 +358,8 @@ public class HikariStorage implements StorageImplementation {
 
     private Map<UUID, String> selectAllUsers(Connection connection) throws Exception {
         Map<UUID, String> result = new HashMap<>();
-        try (final PreparedStatement preparedStatement = connection.prepareStatement(apply(SELECT_USERS_QUERY));) {
-            try (final ResultSet resultSet = preparedStatement.executeQuery();) {
+        try (final PreparedStatement preparedStatement = connection.prepareStatement(apply(SELECT_USERS_QUERY))) {
+            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     final UUID uuid = UUID.fromString(resultSet.getString("uuid"));
                     final String username = resultSet.getString("username");

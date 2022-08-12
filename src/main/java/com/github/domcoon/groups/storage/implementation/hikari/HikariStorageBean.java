@@ -3,42 +3,46 @@ package com.github.domcoon.groups.storage.implementation.hikari;
 import com.github.domcoon.groups.PrefixedExceptionBuilder;
 import com.github.domcoon.groups.configuration.ConfigBean;
 import com.zaxxer.hikari.HikariConfig;
+import java.util.Arrays;
 import org.bukkit.configuration.ConfigurationSection;
 
-import java.util.Arrays;
-
 public class HikariStorageBean implements ConfigBean {
-    private HikariStorageType type;
-    private String url;
-    private int port;
-    private String pass;
-    private String user;
-    private String db;
+  private HikariStorageType type;
+  private String url;
+  private int port;
+  private String pass;
+  private String user;
+  private String db;
 
-    @Override
-    public String getSection() {
-        return "storage";
+  @Override
+  public String getSection() {
+    return "storage";
+  }
+
+  @Override
+  public void loadConfiguration(ConfigurationSection cs) {
+    if (cs == null) {
+      return;
     }
 
-    @Override
-    public void loadConfiguration(ConfigurationSection cs) {
-        if (cs == null)
-            return;
-
-        try {
-            this.type = HikariStorageType.valueOf(cs.getString("type", "MARIADB"));
-        } catch (Exception e) {
-            throw new PrefixedExceptionBuilder().setMessage("Invalid Storage Type. Options are: %s".formatted(Arrays.toString(HikariStorageType.values()))).createPrefixedException();
-        }
-
-        this.url = cs.getString("url", "");
-        this.port = cs.getInt("port", 3306);
-        this.user = cs.getString("user", "");
-        this.pass = cs.getString("password", "");
-        this.db = cs.getString("db", "");
+    try {
+      this.type = HikariStorageType.valueOf(cs.getString("type", "MARIADB"));
+    } catch (Exception e) {
+      throw new PrefixedExceptionBuilder()
+          .setMessage(
+              "Invalid Storage Type. Options are: %s"
+                  .formatted(Arrays.toString(HikariStorageType.values())))
+          .createPrefixedException();
     }
 
-    public void fillHikariConfig(HikariConfig config) {
-        this.type.fillConfig(config, url, port, db, user, pass);
-    }
+    this.url = cs.getString("url", "");
+    this.port = cs.getInt("port", 3306);
+    this.user = cs.getString("user", "");
+    this.pass = cs.getString("password", "");
+    this.db = cs.getString("db", "");
+  }
+
+  public void fillHikariConfig(HikariConfig config) {
+    this.type.fillConfig(config, url, port, db, user, pass);
+  }
 }

@@ -10,30 +10,29 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class UserListener implements Listener {
-    private final GroupsPlugin plugin;
-    private final UserManager userManager;
+  private final GroupsPlugin plugin;
+  private final UserManager userManager;
 
-    public UserListener(GroupsPlugin plugin, UserManager userManager) {
-        this.plugin = plugin;
-        this.userManager = userManager;
-    }
+  public UserListener(GroupsPlugin plugin, UserManager userManager) {
+    this.plugin = plugin;
+    this.userManager = userManager;
+  }
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        userManager.prepareUser(event.getPlayer()).whenComplete((user, throwable) -> {
-            this.greet(event.getPlayer());
-        });
-    }
+  @EventHandler
+  public void onPlayerJoin(PlayerJoinEvent event) {
+    userManager
+        .prepareUser(event.getPlayer())
+        .whenComplete(
+            (user, throwable) -> this.greet(event.getPlayer()));
+  }
 
-    private void greet(Player player) {
-        // Scheduling next tick so the message appears at the bottom of the chat
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                plugin.sendLocalizedMessage(player, LangKeys.GREET);
-            }
-        }.runTask(plugin);
-    }
-
-
+  private void greet(Player player) {
+    // Scheduling next tick so the message appears at the bottom of the chat
+    new BukkitRunnable() {
+      @Override
+      public void run() {
+        plugin.sendLocalizedMessage(player, LangKeys.GREET);
+      }
+    }.runTask(plugin);
+  }
 }

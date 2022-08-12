@@ -3,7 +3,7 @@ package com.github.domcoon.groups.configuration;
 import org.bukkit.configuration.ConfigurationSection;
 
 public interface ConfigBean {
-    String getSection();
+  String getSection();
 
-    void loadConfiguration(ConfigurationSection cs);
+  void loadConfiguration(ConfigurationSection cs);
 }

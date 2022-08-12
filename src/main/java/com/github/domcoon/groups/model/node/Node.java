@@ -1,18 +1,17 @@
 package com.github.domcoon.groups.model.node;
 
 public interface Node {
-    String getPermission();
+  String getPermission();
 
-    boolean getValue();
+  boolean getValue();
 
-    long getExpiringDate();
+  void setValue(boolean value);
 
-    void setExpiringDate(long expiringDate);
+  long getExpiringDate();
 
-    boolean isExpired();
+  void setExpiringDate(long expiringDate);
 
-    long getTimeLeft();
+  boolean isExpired();
 
-    void setValue(boolean value);
-
+  long getTimeLeft();
 }
