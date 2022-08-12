@@ -2,17 +2,22 @@ package com.github.domcoon.groups.model.user;
 
 import com.github.domcoon.groups.GroupsPlugin;
 import com.github.domcoon.groups.PrefixedExceptionBuilder;
+import com.github.domcoon.groups.events.PermissionChangeEvent;
 import com.github.domcoon.groups.lang.LangKeys;
 import com.github.domcoon.groups.model.AbstractManager;
 import com.github.domcoon.groups.model.PermissionManager;
+import com.github.domcoon.groups.model.group.Group;
 import com.github.domcoon.groups.model.node.Node;
 import com.github.domcoon.groups.model.node.NodeBuilder;
 import com.github.domcoon.groups.storage.Storage;
 import com.github.domcoon.groups.util.PermissionAssist;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+
+import static com.github.domcoon.groups.events.PermissionChangeEvent.*;
 
 public class UserManager extends AbstractManager<UUID, User> implements PermissionManager {
     private final Storage storage;

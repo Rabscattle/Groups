@@ -2,6 +2,7 @@ package com.github.domcoon.groups.lang;
 
 import com.github.domcoon.groups.GroupsPlugin;
 import com.github.domcoon.groups.PrefixedException;
+import com.github.domcoon.groups.lang.messagesimpl.ChatMessage;
 import com.github.domcoon.groups.placeholders.PlaceholderPair;
 import com.github.domcoon.groups.util.FileUtils;
 import org.bukkit.NamespacedKey;
@@ -12,8 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class MessageFactory {
@@ -79,5 +79,20 @@ public class MessageFactory {
         }
 
         player.getPersistentDataContainer().set(languageKey, PersistentDataType.STRING, keyed);
+    }
+
+    public Collection<Message> getMessagesRaw(CommandSender sender, String key) {
+        MessageStorage language = this.getLanguage(sender);
+        List<Message> defaultReturn = Collections.singletonList(new ChatMessage(key));
+        if (language == null) {
+            return defaultReturn;
+        }
+
+        Messages messages = language.getMessages().get(key);
+        if (messages == null) {
+            return defaultReturn;
+        }
+
+        return messages.getMessageCollection();
     }
 }

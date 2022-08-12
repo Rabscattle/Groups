@@ -24,4 +24,6 @@ public class LangKeys {
     public static final String USER_RANK_INFO = "user-rank-info";
     public static final String LANGUAGE_NOT_EXISTS = "language-not-exists";
     public static final String LANGUAGE_SET = "language-set";
+
+    public static final String SIGN_TEMPLATE = "sign-template";
 }

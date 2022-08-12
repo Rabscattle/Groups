@@ -7,8 +7,10 @@ import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 import com.github.domcoon.groups.GroupsPlugin;
 import com.github.domcoon.groups.PrefixedException;
+import com.github.domcoon.groups.events.LanguageChangeEvent;
 import com.github.domcoon.groups.lang.LangKeys;
 import com.github.domcoon.groups.lang.MessageFactory;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 @CommandAlias("language")
@@ -28,6 +30,8 @@ public class LanguageCommands extends BaseCommand {
         try {
             this.messageFactory.setLanguage(player, language);
             this.plugin.sendLocalizedMessage(player, LangKeys.LANGUAGE_SET);
+            LanguageChangeEvent event = new LanguageChangeEvent(player, language);
+            Bukkit.getPluginManager().callEvent(event);
         } catch (PrefixedException ex) {
             this.plugin.sendLocalizedMessage(player, ex.getMessage(), ex.getValues());
         }

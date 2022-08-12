@@ -2,6 +2,7 @@ package com.github.domcoon.groups.placeholders;
 
 import com.github.domcoon.groups.GroupsPlugin;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -17,6 +18,7 @@ public class PlaceholderManager {
     }
 
     private void addDefaultPlaceholders() {
+        this.registerPlaceholder("{player_name}", HumanEntity::getName);
         this.registerPlaceholder("{player_group_prefix}", player -> this.plugin.getGroupManager().getGroup(player).getPrefix());
         this.registerPlaceholder("{player_group_name}", player -> this.plugin.getGroupManager().getGroup(player).getName());
     }

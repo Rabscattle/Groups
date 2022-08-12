@@ -20,4 +20,8 @@ public class ChatMessage implements Message {
             sender.sendMessage(message);
         }
     }
+
+    public String getContent() {
+        return messageTemplate;
+    }
 }

@@ -10,8 +10,10 @@ import com.github.domcoon.groups.model.group.GroupManager;
 import com.github.domcoon.groups.model.user.UserManager;
 import com.github.domcoon.groups.placeholders.PlaceholderManager;
 import com.github.domcoon.groups.placeholders.PlaceholderPair;
+import com.github.domcoon.groups.sign.SignManager;
 import com.github.domcoon.groups.storage.Storage;
 import org.bukkit.Bukkit;
+import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,6 +25,7 @@ public final class GroupsPlugin extends JavaPlugin {
     private GroupManager groupManager;
     private UserManager userManager;
     private PlaceholderManager placeholderManager;
+    private SignManager signManager;
     private Storage storage;
 
     @Override
@@ -34,7 +37,7 @@ public final class GroupsPlugin extends JavaPlugin {
         this.groupManager = new GroupManager(this.storage, this);
         this.userManager = new UserManager(this.storage, this);
         this.placeholderManager = new PlaceholderManager(this);
-
+        this.signManager = new SignManager(this, messageFactory);
         this.messageFactory.reloadLanguages();
         this.pluginConfiguration.reloadConfiguration();
 
@@ -92,5 +95,9 @@ public final class GroupsPlugin extends JavaPlugin {
 
     public GroupManager getGroupManager() {
         return this.groupManager;
+    }
+
+    public PlaceholderManager getPlaceholderManager() {
+        return placeholderManager;
     }
 }

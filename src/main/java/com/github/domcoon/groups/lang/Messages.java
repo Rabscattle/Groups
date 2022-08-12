@@ -8,6 +8,7 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 public class Messages {
     private Collection<Message> messageCollection = new ArrayList<>();
@@ -30,5 +31,9 @@ public class Messages {
         for (Message message : messageCollection) {
             message.sendMessage(sender, values);
         }
+    }
+
+    public Collection<Message> getMessageCollection() {
+        return Collections.unmodifiableCollection(messageCollection);
     }
 }

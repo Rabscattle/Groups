@@ -2,6 +2,7 @@ package com.github.domcoon.groups.model.group;
 
 import com.github.domcoon.groups.GroupsPlugin;
 import com.github.domcoon.groups.PrefixedExceptionBuilder;
+import com.github.domcoon.groups.events.PermissionChangeEvent;
 import com.github.domcoon.groups.lang.LangKeys;
 import com.github.domcoon.groups.model.AbstractManager;
 import com.github.domcoon.groups.model.PermissionManager;
@@ -10,12 +11,16 @@ import com.github.domcoon.groups.model.user.User;
 import com.github.domcoon.groups.storage.Storage;
 import com.github.domcoon.groups.util.PermissionAssist;
 import com.github.domcoon.groups.view.GroupView;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.concurrent.CompletableFuture;
+
+import static com.github.domcoon.groups.events.PermissionChangeEvent.*;
 
 public class GroupManager extends AbstractManager<String, Group> implements PermissionManager {
     public static final GroupNode DEFAULT_GROUP = new GroupNode("default", 0L);
