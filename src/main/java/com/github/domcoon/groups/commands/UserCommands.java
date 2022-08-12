@@ -1,6 +1,7 @@
 package com.github.domcoon.groups.commands;
 
 import co.aikar.commands.BaseCommand;
+import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import com.github.domcoon.groups.GroupsPlugin;
 import com.github.domcoon.groups.PrefixedException;
@@ -22,6 +23,12 @@ public class UserCommands extends BaseCommand {
     public UserCommands(GroupsPlugin plugin, UserManager userManager) {
         this.plugin = plugin;
         this.userManager = userManager;
+    }
+
+    @HelpCommand
+    public void doHelp(CommandSender sender, CommandHelp help) {
+        help.setPerPage(10);
+        help.showHelp();
     }
 
     @Subcommand("info")

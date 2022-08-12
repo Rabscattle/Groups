@@ -27,6 +27,7 @@ public class GroupCommands extends BaseCommand {
 
     @HelpCommand
     public void doHelp(CommandSender sender, CommandHelp help) {
+        help.setPerPage(10);
         help.showHelp();
     }
 
