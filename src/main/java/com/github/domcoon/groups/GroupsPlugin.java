@@ -47,7 +47,9 @@ public final class GroupsPlugin extends JavaPlugin {
     try {
       this.storage.init();
     } catch (Exception e) {
-      e.printStackTrace();
+      this.getLogger().severe(e.getMessage());
+      this.getLogger().severe("DISABLING PLUGIN");
+      Bukkit.getPluginManager().disablePlugin(this);
       return;
     }
 

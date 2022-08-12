@@ -225,15 +225,18 @@ public class HikariStorage implements StorageImplementation {
                 .replace("{table}", pair.getTable())
                 .replace("{id_row}", pair.getRowId());
 
-        try (PreparedStatement st = connection.prepareStatement(query)) {
+        try (PreparedStatement st = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             st.setString(1, holder.getUniqueId().toString());
             st.setString(2, node.getPermission());
             st.setBoolean(3, node.getValue());
             st.setLong(4, node.getExpiringDate());
 
+            st.execute();
             try (ResultSet resultSet = st.getGeneratedKeys()) {
-                int id = resultSet.getInt("id");
-                this.replaceNode(holder, node, new StorageNode(id, node));
+                if (resultSet.next()) {
+                    long id = resultSet.getLong("id");
+                    this.replaceNode(holder, node, new StorageNode(id, node));
+                }
             }
         }
     }

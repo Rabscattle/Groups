@@ -31,7 +31,7 @@ public class PermissionAssist {
     }
 
     holder.invalidate();
-    callEvent(holder, null, ChangeType.SET);
+    callEvent(holder, node, ChangeType.SET);
     return CompletableFuture.completedFuture(null);
   }
 
@@ -52,7 +52,7 @@ public class PermissionAssist {
 
   private static void callEvent(PermissionHolder holder, Node node, ChangeType type) {
     PermissionChangeEvent permissionChangeEvent =
-        new PermissionChangeEvent(holder, null, ChangeType.REMOVE);
+        new PermissionChangeEvent(holder, node, ChangeType.REMOVE);
     Bukkit.getPluginManager().callEvent(permissionChangeEvent);
   }
 }

@@ -66,7 +66,6 @@ public class PermissionCache {
   public void addNode(Node node) {
     this.permissionNodes.add(node);
     this.addedNodes.add(node);
-    this.removedNodes.remove(node);
   }
 
   public void removeNode(Node node) {

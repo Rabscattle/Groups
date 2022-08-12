@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'com.github.sherter.google-java-format' version '0.9'
 }
 
 group = 'com.github.domcoon'
@@ -30,7 +31,7 @@ dependencies {
     // Storage
     implementation 'com.zaxxer:HikariCP:5.0.1'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.30'
-    implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.6'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.2'
 
     // Testing
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.0'

@@ -30,4 +30,5 @@ public class StorageNode extends PermissionNode {
   public void setId(long id) {
     this.id = id;
   }
+
 }

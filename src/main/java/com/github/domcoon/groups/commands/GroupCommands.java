@@ -20,7 +20,7 @@ import java.time.format.DateTimeParseException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@CommandAlias("groups|g group")
+@CommandAlias("group")
 @CommandPermission("groups.admin.groups")
 public class GroupCommands extends BaseCommand {
   private final GroupsPlugin plugin;

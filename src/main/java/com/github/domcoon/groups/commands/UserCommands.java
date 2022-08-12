@@ -21,7 +21,7 @@ import com.github.domcoon.groups.util.DurationUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@CommandAlias("groups|g user|player")
+@CommandAlias("user")
 @CommandPermission("groups.admin")
 public class UserCommands extends BaseCommand {
   public final GroupsPlugin plugin;
