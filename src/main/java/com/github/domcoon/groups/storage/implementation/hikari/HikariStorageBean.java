@@ -1,6 +1,6 @@
 package com.github.domcoon.groups.storage.implementation.hikari;
 
-import com.github.domcoon.groups.PrefixedException;
+import com.github.domcoon.groups.PrefixedExceptionBuilder;
 import com.github.domcoon.groups.configuration.ConfigBean;
 import com.zaxxer.hikari.HikariConfig;
 import org.bukkit.configuration.ConfigurationSection;
@@ -28,7 +28,7 @@ public class HikariStorageBean implements ConfigBean {
         try {
             this.type = HikariStorageType.valueOf(cs.getString("type", "MARIADB"));
         } catch (Exception e) {
-            throw new PrefixedException("Invalid Storage Type. Options are: %s".formatted(Arrays.toString(HikariStorageType.values())));
+            throw new PrefixedExceptionBuilder().setMessage("Invalid Storage Type. Options are: %s".formatted(Arrays.toString(HikariStorageType.values()))).createPrefixedException();
         }
 
         this.url = cs.getString("url", "");

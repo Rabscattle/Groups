@@ -1,6 +1,7 @@
 package com.github.domcoon.groups.lang;
 
 import com.github.domcoon.groups.GroupsPlugin;
+import com.github.domcoon.groups.PrefixedException;
 import com.github.domcoon.groups.placeholders.PlaceholderPair;
 import com.github.domcoon.groups.util.FileUtils;
 import org.bukkit.NamespacedKey;
@@ -9,13 +10,8 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.util.FileUtil;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -74,5 +70,14 @@ public class MessageFactory {
         Player player = ((Player) sender);
         String language = player.getPersistentDataContainer().getOrDefault(languageKey, PersistentDataType.STRING, DEFAULT_LANGUAGE);
         return languages.containsKey(language) ? languages.get(language) : languages.get(DEFAULT_LANGUAGE);
+    }
+
+    public void setLanguage(Player player, String language) {
+        String keyed = language.toLowerCase();
+        if (!this.languages.containsKey(keyed)) {
+            throw new PrefixedException(LangKeys.LANGUAGE_NOT_EXISTS);
+        }
+
+        player.getPersistentDataContainer().set(languageKey, PersistentDataType.STRING, keyed);
     }
 }

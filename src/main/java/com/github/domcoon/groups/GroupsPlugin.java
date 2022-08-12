@@ -1,10 +1,7 @@
 package com.github.domcoon.groups;
 
 import co.aikar.commands.PaperCommandManager;
-import com.github.domcoon.groups.commands.GroupCommands;
-import com.github.domcoon.groups.commands.PluginCommands;
-import com.github.domcoon.groups.commands.RankCommand;
-import com.github.domcoon.groups.commands.UserCommands;
+import com.github.domcoon.groups.commands.*;
 import com.github.domcoon.groups.configuration.PluginConfiguration;
 import com.github.domcoon.groups.lang.MessageFactory;
 import com.github.domcoon.groups.listener.ChatListener;
@@ -66,6 +63,7 @@ public final class GroupsPlugin extends JavaPlugin {
         this.commandManager.registerCommand(new GroupCommands(this, groupManager));
         this.commandManager.registerCommand(new UserCommands(this, userManager));
         this.commandManager.registerCommand(new RankCommand(this, userManager, groupManager));
+        this.commandManager.registerCommand(new LanguageCommands(this, messageFactory));
     }
 
     @Override

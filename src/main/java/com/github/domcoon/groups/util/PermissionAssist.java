@@ -1,6 +1,7 @@
 package com.github.domcoon.groups.util;
 
 import com.github.domcoon.groups.PrefixedException;
+import com.github.domcoon.groups.PrefixedExceptionBuilder;
 import com.github.domcoon.groups.lang.LangKeys;
 import com.github.domcoon.groups.model.PermissionHolder;
 import com.github.domcoon.groups.model.node.Node;
@@ -13,7 +14,7 @@ public class PermissionAssist {
         Node existingNode = holder.getPermissionCache().getExact(node.getPermission());
 
         if (Objects.equals(existingNode, node)) {
-            throw new PrefixedException(LangKeys.NODE_ALREADY_SET);
+            throw new PrefixedExceptionBuilder().setMessage(LangKeys.NODE_ALREADY_SET).createPrefixedException();
         }
 
         if (existingNode == null) {
@@ -31,7 +32,7 @@ public class PermissionAssist {
     public static CompletableFuture<Void> removePermission(PermissionHolder holder, String permission) throws PrefixedException {
         Node exact = holder.getPermissionCache().getExact(permission);
         if (exact == null) {
-            throw new PrefixedException(LangKeys.NODE_NOT_SET);
+            throw new PrefixedExceptionBuilder().setMessage(LangKeys.NODE_NOT_SET).createPrefixedException();
         }
 
         holder.getPermissionCache().removeNode(exact);

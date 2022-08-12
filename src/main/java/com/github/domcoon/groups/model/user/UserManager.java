@@ -1,7 +1,7 @@
 package com.github.domcoon.groups.model.user;
 
 import com.github.domcoon.groups.GroupsPlugin;
-import com.github.domcoon.groups.PrefixedException;
+import com.github.domcoon.groups.PrefixedExceptionBuilder;
 import com.github.domcoon.groups.lang.LangKeys;
 import com.github.domcoon.groups.model.AbstractManager;
 import com.github.domcoon.groups.model.PermissionManager;
@@ -42,7 +42,7 @@ public class UserManager extends AbstractManager<UUID, User> implements Permissi
 
         return loadUser(subject).thenCompose(loaded -> {
             if (loaded == null) {
-                throw new PrefixedException(LangKeys.USER_NOT_EXISTS);
+                throw new PrefixedExceptionBuilder().setMessage(LangKeys.USER_NOT_EXISTS).createPrefixedException();
             }
             return setPermission(loaded, build);
         });
@@ -76,7 +76,7 @@ public class UserManager extends AbstractManager<UUID, User> implements Permissi
     public CompletableFuture<Void> removePermission(String subject, String permission) {
         return loadUser(subject).thenCompose(user -> {
             if (user == null)
-                throw new PrefixedException(LangKeys.USER_NOT_EXISTS);
+                throw new PrefixedExceptionBuilder().setMessage(LangKeys.USER_NOT_EXISTS).createPrefixedException();
             return this.removePermission(user, permission);
         });
     }

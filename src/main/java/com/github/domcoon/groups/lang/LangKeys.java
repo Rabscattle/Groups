@@ -22,4 +22,6 @@ public class LangKeys {
     public static final String PREFIX_CLEARED = "prefix-cleared";
     public static final String PLUGIN_RELOADED = "plugin-reloaded";
     public static final String USER_RANK_INFO = "user-rank-info";
+    public static final String LANGUAGE_NOT_EXISTS = "language-not-exists";
+    public static final String LANGUAGE_SET = "language-set";
 }

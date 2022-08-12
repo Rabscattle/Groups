@@ -1,7 +1,7 @@
 package com.github.domcoon.groups.model.group;
 
 import com.github.domcoon.groups.GroupsPlugin;
-import com.github.domcoon.groups.PrefixedException;
+import com.github.domcoon.groups.PrefixedExceptionBuilder;
 import com.github.domcoon.groups.lang.LangKeys;
 import com.github.domcoon.groups.model.AbstractManager;
 import com.github.domcoon.groups.model.PermissionManager;
@@ -42,7 +42,7 @@ public class GroupManager extends AbstractManager<String, Group> implements Perm
     public CompletableFuture<Group> createAndLoad(String name) {
         String key = name.toLowerCase();
         if (contains(key)) {
-            throw new PrefixedException(LangKeys.GROUP_EXIST);
+            throw new PrefixedExceptionBuilder().setMessage(LangKeys.GROUP_EXIST).createPrefixedException();
         }
         return storage.createAndLoadGroup(name);
     }
@@ -59,11 +59,11 @@ public class GroupManager extends AbstractManager<String, Group> implements Perm
     public CompletableFuture<Void> assignGroup(User user, String group, long duration) {
         GroupNode storedGroup = user.getStoredGroup();
         if (storedGroup != null && !storedGroup.isExpired() && group.equalsIgnoreCase(storedGroup.getGroup())) {
-            throw new PrefixedException(LangKeys.GROUP_ALREADY_HAS);
+            throw new PrefixedExceptionBuilder().setMessage(LangKeys.GROUP_ALREADY_HAS).createPrefixedException();
         }
 
         if (!contains(group)) {
-            throw new PrefixedException(LangKeys.GROUP_DOES_NOT_EXIST);
+            throw new PrefixedExceptionBuilder().setMessage(LangKeys.GROUP_DOES_NOT_EXIST).createPrefixedException();
         }
 
         GroupNode groupNode = new GroupNode(group);
@@ -111,7 +111,7 @@ public class GroupManager extends AbstractManager<String, Group> implements Perm
     @Override
     public CompletableFuture<Void> setPermission(String subject, String permission, boolean value, long expiring) {
         if (!contains(subject)) {
-            throw new PrefixedException(LangKeys.GROUP_DOES_NOT_EXIST);
+            throw new PrefixedExceptionBuilder().setMessage(LangKeys.GROUP_DOES_NOT_EXIST).createPrefixedException();
         }
 
         Group group = get(subject);
@@ -128,7 +128,7 @@ public class GroupManager extends AbstractManager<String, Group> implements Perm
     @Override
     public CompletableFuture<Void> removePermission(String subject, String permission) {
         if (!contains(subject)) {
-            throw new PrefixedException(LangKeys.GROUP_DOES_NOT_EXIST);
+            throw new PrefixedExceptionBuilder().setMessage(LangKeys.GROUP_DOES_NOT_EXIST).createPrefixedException();
         }
 
         Group group = get(subject);
@@ -138,7 +138,7 @@ public class GroupManager extends AbstractManager<String, Group> implements Perm
 
     public CompletableFuture<Void> deleteGroup(String name) {
         if (!contains(name)) {
-            throw new PrefixedException(LangKeys.GROUP_DOES_NOT_EXIST);
+            throw new PrefixedExceptionBuilder().setMessage(LangKeys.GROUP_DOES_NOT_EXIST).createPrefixedException();
         }
         remove(name);
         plugin.getUserManager().getAll().forEach(user -> {
@@ -153,7 +153,7 @@ public class GroupManager extends AbstractManager<String, Group> implements Perm
 
     public void clearPrefix(String name) {
         if (!contains(name)) {
-            throw new PrefixedException(LangKeys.GROUP_DOES_NOT_EXIST);
+            throw new PrefixedExceptionBuilder().setMessage(LangKeys.GROUP_DOES_NOT_EXIST).createPrefixedException();
         }
 
         Group group = get(name);
@@ -187,7 +187,7 @@ public class GroupManager extends AbstractManager<String, Group> implements Perm
 
     private void checkPrefix(String prefix) {
         if (prefix.length() < 1 || prefix.length() > 16) {
-            throw new PrefixedException(LangKeys.INVALID_PREFIX);
+            throw new PrefixedExceptionBuilder().setMessage(LangKeys.INVALID_PREFIX).createPrefixedException();
         }
     }
 }
