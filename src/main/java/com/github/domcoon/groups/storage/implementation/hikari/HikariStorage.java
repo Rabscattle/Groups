@@ -33,14 +33,13 @@ public class HikariStorage implements StorageImplementation {
     private static final String INSERT_USER_QUERY = "INSERT INTO 'users' (uuid, username) VALUES(?,?)";
     private static final String SELECT_USER_BY_NAME = "SELECT uuid FROM users WHERE 'name'=?";
     private static final String SELECT_USERS_QUERY = "SELECT * FROM 'users'";
-    private static final String REMOVE_USER_NODES_QUERY = "DELETE FROM 'user_permissions' WHERE 'permission'=?";
+    private static final String DELETE_USER_NODES_QUERY = "DELETE FROM 'user_permissions' WHERE 'permission'=?";
 
     private static final String LOAD_ALL_NODES_QUERY = "SELECT * FROM '{table}' WHERE '{id_row}'=?";
     private static final String UPDATE_NODE_QUERY = "UPDATE '{table}' SET 'value'=?, 'expiring'=? WHERE id=?";
     private static final String INSERT_NODE_QUERY = "INSERT INTO '{table}' ('{id_row}', permission, value, expiring) VALUES(?,?,?,?)";
-    private static final String REMOVE_NODE_QUERY = "DELETE FROM '{table}' WHERE 'id'=?";
-
-    private static final String REMOVE_EXPIRED_NODES_QUERY = "DELETE FROM '{table}' WHERE 'expiring'!=0 AND 'expiring'<?";
+    private static final String DELETE_NODE_QUERY = "DELETE FROM '{table}' WHERE 'id'=?";
+    private static final String DELETE_EXPIRED_NODES_QUERY = "DELETE FROM '{table}' WHERE 'expiring'!=0 AND 'expiring'<?";
 
     private final HikariStorageBean storageBean = new HikariStorageBean();
     private final GroupsPlugin plugin;
@@ -222,13 +221,21 @@ public class HikariStorage implements StorageImplementation {
             st.setBoolean(3, node.getValue());
             st.setLong(4, node.getExpiringDate());
 
-            st.execute();
+            try (ResultSet resultSet = st.getGeneratedKeys()) {
+                int id = resultSet.getInt("id");
+                this.replaceNode(holder, node, new StorageNode(id, node));
+            }
         }
+    }
+
+    private void replaceNode(PermissionHolder holder, Node old, Node newNode) {
+        holder.getPermissionCache().internal().remove(old);
+        holder.getPermissionCache().internal().add(newNode);
     }
 
     private void removeNode(Connection connection, PermissionHolder holder, StorageNode node) throws SQLException {
         TableIdRowPair pair = getRowPair(holder.getType());
-        String query = apply(REMOVE_NODE_QUERY).replace("{table}", pair.getTable());
+        String query = apply(DELETE_NODE_QUERY).replace("{table}", pair.getTable());
 
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setLong(1, node.getId());
@@ -401,7 +408,7 @@ public class HikariStorage implements StorageImplementation {
     public void deleteExpiredNodes(HolderType type) throws Exception {
         TableIdRowPair rowPair = getRowPair(type);
         try (Connection connection = getConnection()) {
-            String apply = apply(REMOVE_EXPIRED_NODES_QUERY)
+            String apply = apply(DELETE_EXPIRED_NODES_QUERY)
                     .replace("{table}", rowPair.getTable());
             try (PreparedStatement statement = connection.prepareStatement(apply)) {
                 statement.setLong(1, System.currentTimeMillis());
@@ -413,7 +420,7 @@ public class HikariStorage implements StorageImplementation {
     @Override
     public void deleteNodesFromUsers(String permission) throws Exception {
         try (Connection connection = getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(apply(REMOVE_USER_NODES_QUERY))) {
+            try (PreparedStatement statement = connection.prepareStatement(apply(DELETE_USER_NODES_QUERY))) {
                 statement.setString(1, permission);
                 statement.execute();
             }

@@ -18,6 +18,11 @@ public class StorageNode extends PermissionNode {
         this.id = id;
     }
 
+    public StorageNode(long id, Node node) {
+        super(node.getPermission(), node.getValue(), node.getExpiringDate());
+        this.id = id;
+    }
+
     public long getId() {
         return id;
     }

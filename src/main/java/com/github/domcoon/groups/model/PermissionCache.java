@@ -1,7 +1,6 @@
 package com.github.domcoon.groups.model;
 
 import com.github.domcoon.groups.model.node.Node;
-import com.github.domcoon.groups.model.node.PermissionNode;
 import com.github.domcoon.groups.model.node.StorageNode;
 
 import java.util.ArrayList;
@@ -96,4 +95,7 @@ public class PermissionCache {
         return changedNodes;
     }
 
+    public Set<Node> internal() {
+        return this.permissionNodes;
+    }
 }
