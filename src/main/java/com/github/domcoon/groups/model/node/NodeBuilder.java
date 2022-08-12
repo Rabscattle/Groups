@@ -5,6 +5,11 @@ public class NodeBuilder {
   private final boolean value;
   private long expiry;
 
+  public NodeBuilder(String permission) {
+    this.permission = permission;
+    this.value = true;
+  }
+
   public NodeBuilder(String permission, boolean value) {
     this.permission = permission;
     this.value = value;

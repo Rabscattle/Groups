@@ -47,6 +47,10 @@ public class PermissionCache {
     return new HashSet<>(permissionNodes);
   }
 
+  public int size() {
+    return this.permissionNodes.size();
+  }
+
   public Node getExact(String permission) {
     for (Node permissionNode : this.permissionNodes) {
       if (permissionNode.isExpired()) {

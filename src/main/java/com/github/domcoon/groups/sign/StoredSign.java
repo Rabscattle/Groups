@@ -1,6 +1,9 @@
 package com.github.domcoon.groups.sign;
 
-// will be used to retrieve faster updates if no changes have occured
+/**
+ * This class holds the currently represented
+ * version of a sign that a player will see
+ */
 public class StoredSign {
   private final String[] content;
 

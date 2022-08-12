@@ -5,11 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.github.domcoon.groups.util.DurationUtil;
 import java.time.format.DateTimeParseException;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DurationFormatTest {
 
   @Test
+  @DisplayName("Duration Format Test: Simple")
   public void testSimple() {
     long l1 = DurationUtil.parseDuration("5s");
     long l2 = DurationUtil.parseDuration("5d5s");

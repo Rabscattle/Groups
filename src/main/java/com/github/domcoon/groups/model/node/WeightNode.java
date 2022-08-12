@@ -5,6 +5,10 @@ public class WeightNode implements Comparable<WeightNode> {
 
   private final int weight;
 
+  public WeightNode(int weight) {
+    this.weight = weight;
+  }
+
   public WeightNode(Node group) {
     this.weight = Integer.parseInt(group.getPermission().split("\\.")[1]);
   }
@@ -16,5 +20,9 @@ public class WeightNode implements Comparable<WeightNode> {
   @Override
   public int compareTo(WeightNode o) {
     return this.weight - o.weight;
+  }
+
+  public Node toPermissionNode() {
+    return new NodeBuilder("weight.%d".formatted(this.weight)).build();
   }
 }
