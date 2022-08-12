@@ -16,12 +16,16 @@ import com.github.domcoon.groups.placeholders.PlaceholderManager;
 import com.github.domcoon.groups.placeholders.PlaceholderPair;
 import com.github.domcoon.groups.sign.SignManager;
 import com.github.domcoon.groups.storage.Storage;
+import javax.swing.Spring;
+import javax.swing.SpringLayout;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class GroupsPlugin extends JavaPlugin {
+  private static GroupsPlugin instance;
   private PluginConfiguration pluginConfiguration;
   private MessageFactory messageFactory;
   private PaperCommandManager commandManager;
@@ -54,6 +58,7 @@ public final class GroupsPlugin extends JavaPlugin {
     }
 
     // UI
+    setInstance(this);
     registerCommands();
     registerListeners();
   }
@@ -104,5 +109,13 @@ public final class GroupsPlugin extends JavaPlugin {
 
   public PlaceholderManager getPlaceholderManager() {
     return placeholderManager;
+  }
+
+  public static GroupsPlugin getInstance() {
+    return instance;
+  }
+
+  private static void setInstance(GroupsPlugin instance) {
+    GroupsPlugin.instance = instance;
   }
 }

@@ -1,5 +1,6 @@
 package com.github.domcoon.groups.util;
 
+import com.github.domcoon.groups.GroupsPlugin;
 import com.github.domcoon.groups.PrefixedException;
 import com.github.domcoon.groups.PrefixedExceptionBuilder;
 import com.github.domcoon.groups.events.ChangeType;
@@ -10,6 +11,7 @@ import com.github.domcoon.groups.model.node.Node;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class PermissionAssist {
   public static CompletableFuture<Void> setPermission(PermissionHolder holder, Node node)
@@ -51,8 +53,10 @@ public class PermissionAssist {
   }
 
   private static void callEvent(PermissionHolder holder, Node node, ChangeType type) {
-    PermissionChangeEvent permissionChangeEvent =
-        new PermissionChangeEvent(holder, node, ChangeType.REMOVE);
-    Bukkit.getPluginManager().callEvent(permissionChangeEvent);
+    Bukkit.getScheduler().runTask(GroupsPlugin.getInstance(), () -> {
+      PermissionChangeEvent permissionChangeEvent =
+          new PermissionChangeEvent(holder, node, ChangeType.REMOVE);
+      Bukkit.getPluginManager().callEvent(permissionChangeEvent);
+    });
   }
 }

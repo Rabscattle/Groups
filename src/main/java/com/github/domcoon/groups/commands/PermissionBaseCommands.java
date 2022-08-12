@@ -62,6 +62,7 @@ public class PermissionBaseCommands {
       if (cause instanceof PrefixedException) {
         plugin.sendLocalizedMessage(sender, cause.getMessage());
       } else {
+        plugin.getLogger().severe(cause.getMessage());
         plugin.sendLocalizedMessage(sender, LangKeys.FAILURE_DURING_SET);
       }
     } else {
