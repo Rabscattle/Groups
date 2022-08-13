@@ -1,6 +1,5 @@
 package com.github.domcoon.groups.commands;
 
-import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
@@ -18,12 +17,13 @@ import com.github.domcoon.groups.model.node.Node;
 import com.github.domcoon.groups.model.user.User;
 import com.github.domcoon.groups.model.user.UserManager;
 import com.github.domcoon.groups.util.DurationUtil;
+import java.time.format.DateTimeParseException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @CommandAlias("user")
 @CommandPermission("groups.admin")
-public class UserCommands extends BaseCommand {
+public class UserCommands extends ABaseCommand {
   public final GroupsPlugin plugin;
   public final UserManager userManager;
 
@@ -90,7 +90,7 @@ public class UserCommands extends BaseCommand {
   }
 
   @Subcommand("perm|permission")
-  public class PermissionCommands extends BaseCommand {
+  public class PermissionCommands extends ABaseCommand {
     @Subcommand("set|add")
     @Syntax("<target> <permission> [true|false] [duration]")
     public void setPermission(
@@ -109,5 +109,63 @@ public class UserCommands extends BaseCommand {
       PermissionBaseCommands.executeRemovePermission(
           plugin, userManager, sender, subject, permission);
     }
+  }
+
+  @Subcommand("group")
+  public class GroupCommands extends ABaseCommand {
+    @Subcommand("add")
+    @Syntax("<user> <group> [expire]")
+    public void add(
+        CommandSender sender, String target, String group, @Single @Default("0s") String duration) {
+      try {
+        long expire = DurationUtil.parseDuration(duration);
+        plugin
+            .getGroupManager()
+            .addGroup(target, group, expire)
+            .whenComplete(
+                (unused, throwable) ->
+                    handleCompletion(throwable, plugin, sender, LangKeys.USER_GROUP_ADDED, LangKeys.FAILURE_DURING_SET));
+      } catch (PrefixedException ex) {
+        plugin.sendLocalizedMessage(sender, ex.getMessage());
+      } catch (DateTimeParseException ex) {
+        plugin.sendLocalizedMessage(sender, LangKeys.INVALID_DURATION);
+      }
+    }
+
+    @Subcommand("set")
+    @Syntax("<user> <group> [expire]")
+    public void set(
+        CommandSender sender, String target, String group, @Single @Default("0s") String duration) {
+      try {
+        long expire = DurationUtil.parseDuration(duration);
+        plugin
+            .getGroupManager()
+            .setGroup(target, group, expire)
+            .whenComplete(
+                (unused, throwable) ->
+                    handleCompletion(throwable, plugin, sender, LangKeys.USER_GROUP_SET, LangKeys.FAILURE_DURING_SET));
+      } catch (PrefixedException ex) {
+        plugin.sendLocalizedMessage(sender, ex.getMessage());
+      } catch (DateTimeParseException ex) {
+        plugin.sendLocalizedMessage(sender, LangKeys.INVALID_DURATION);
+      }
+    }
+
+    @Subcommand("remove")
+    @Syntax("<user> <group>")
+    public void remove(
+        CommandSender sender, String target, String group) {
+      try {
+        plugin
+            .getGroupManager()
+            .removeGroup(target, group)
+            .whenComplete(
+                (unused, throwable) ->
+                    handleCompletion(throwable, plugin, sender, LangKeys.USER_GROUP_REMOVED, LangKeys.FAILURE_DURING_REMOVE));
+      } catch (PrefixedException ex) {
+        plugin.sendLocalizedMessage(sender, ex.getMessage());
+      }
+    }
+
   }
 }

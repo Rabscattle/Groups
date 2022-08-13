@@ -22,7 +22,7 @@ import org.bukkit.entity.Player;
 
 @CommandAlias("group")
 @CommandPermission("groups.admin.groups")
-public class GroupCommands extends BaseCommand {
+public class GroupCommands extends ABaseCommand {
   private final GroupsPlugin plugin;
   private final GroupManager groupManager;
 
@@ -59,31 +59,13 @@ public class GroupCommands extends BaseCommand {
     }
   }
 
-  @Subcommand("assign")
-  @Syntax("<player> <group> [expire]")
-  public void assign(
-      CommandSender sender, Player player, String group, @Single @Default("0s") String duration) {
-    try {
-      long expire = DurationUtil.parseDuration(duration);
-      this.groupManager
-          .assignGroup(player, group, expire)
-          .whenComplete(
-              (unused, throwable) ->
-                  this.plugin.sendLocalizedMessage(sender, LangKeys.GROUP_ASSIGNED));
-    } catch (PrefixedException ex) {
-      this.plugin.sendLocalizedMessage(sender, ex.getMessage());
-    } catch (DateTimeParseException ex) {
-      this.plugin.sendLocalizedMessage(sender, LangKeys.INVALID_DURATION);
-    }
-  }
-
   @Subcommand("list")
   public void onView(CommandSender sender) {
     this.groupManager.sendGroupsView(sender, new GroupTextView());
   }
 
   @Subcommand("prefix")
-  public class PrefixCommands extends BaseCommand {
+  public class PrefixCommands extends ABaseCommand {
     @Subcommand("set")
     @Syntax("<group> <prefix>")
     public void setPrefix(CommandSender sender, String group, @Single String prefix) {
@@ -119,7 +101,7 @@ public class GroupCommands extends BaseCommand {
   }
 
   @Subcommand("perm|permission")
-  public class PermissionCommands extends BaseCommand {
+  public class PermissionCommands extends ABaseCommand {
     @Subcommand("set|add")
     @Syntax("<target> <permission> [true|false] [duration]")
     public void setPermission(

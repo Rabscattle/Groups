@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
 
 @CommandAlias("groups|g")
 @CommandPermission("groups.admin")
-public class PluginCommands extends BaseCommand {
+public class PluginCommands extends ABaseCommand {
   private final GroupsPlugin plugin;
 
   public PluginCommands(GroupsPlugin plugin) {

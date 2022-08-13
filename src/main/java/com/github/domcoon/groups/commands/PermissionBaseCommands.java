@@ -29,7 +29,12 @@ public class PermissionBaseCommands {
           .setPermission(subject, permission, value, durationParsed)
           .whenComplete(
               (unused, throwable) ->
-                  handleCompletion(throwable, plugin, sender, LangKeys.PERMISSION_SET));
+                  handleCompletion(
+                      throwable,
+                      plugin,
+                      sender,
+                      LangKeys.PERMISSION_SET,
+                      LangKeys.FAILURE_DURING_SET));
     } catch (PrefixedException ex) {
       plugin.sendLocalizedMessage(sender, ex.getMessage());
     } catch (DateTimeParseException ex) {
@@ -49,21 +54,30 @@ public class PermissionBaseCommands {
           .removePermission(subject, permission)
           .whenComplete(
               (unused, throwable) ->
-                  handleCompletion(throwable, plugin, sender, LangKeys.PERMISSION_REMOVED));
+                  handleCompletion(
+                      throwable,
+                      plugin,
+                      sender,
+                      LangKeys.PERMISSION_REMOVED,
+                      LangKeys.FAILURE_DURING_REMOVE));
     } catch (PrefixedException ex) {
       plugin.sendLocalizedMessage(sender, ex.getMessage());
     }
   }
 
   private static void handleCompletion(
-      Throwable throwable, GroupsPlugin plugin, CommandSender sender, String completionMessage) {
+      Throwable throwable,
+      GroupsPlugin plugin,
+      CommandSender sender,
+      String completionMessage,
+      String failureMessage) {
     if (throwable != null) {
       Throwable cause = throwable.getCause();
       if (cause instanceof PrefixedException) {
         plugin.sendLocalizedMessage(sender, cause.getMessage());
       } else {
         plugin.getLogger().severe(cause.getMessage());
-        plugin.sendLocalizedMessage(sender, LangKeys.FAILURE_DURING_SET);
+        plugin.sendLocalizedMessage(sender, failureMessage);
       }
     } else {
       plugin.sendLocalizedMessage(sender, completionMessage);

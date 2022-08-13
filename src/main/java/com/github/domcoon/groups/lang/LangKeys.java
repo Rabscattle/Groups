@@ -4,7 +4,9 @@ public class LangKeys {
   public static final String GROUP_EXIST = "group-exist";
   public static final String GROUP_ALREADY_HAS = "group-already-has";
   public static final String GROUP_DOES_NOT_EXIST = "group-not-exists";
-  public static final String GROUP_ASSIGNED = "group-assigned";
+  public static final String USER_GROUP_ADDED = "user-group-added";
+  public static final String USER_GROUP_SET = "user-group-set";
+  public static final String USER_GROUP_REMOVED = "user-group-removed";
   public static final String GROUP_CREATED = "group-created";
   public static final String GROUP_DELETED = "group-deleted";
   public static final String GREET = "greet";
@@ -15,6 +17,7 @@ public class LangKeys {
   public static final String PERMISSION_SET = "permission-set";
   public static final String PERMISSION_REMOVED = "permission-removed";
   public static final String FAILURE_DURING_SET = "failure-during-set";
+  public static final String FAILURE_DURING_REMOVE = "failure-during-remove";
   public static final String FAILURE_DURING_LOAD = "failure-during-load";
   public static final String INVALID_PREFIX = "invalid-prefix";
   public static final String PREFIX_SET = "prefix-set";

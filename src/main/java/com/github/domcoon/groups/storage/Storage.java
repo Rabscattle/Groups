@@ -44,7 +44,7 @@ public class Storage {
   }
 
   public void reload() {
-    // Not sure how to reload yet...
+    // Not sure how/what to reload yet...
   }
 
   private CompletableFuture<Void> future(Runnable runnable) {

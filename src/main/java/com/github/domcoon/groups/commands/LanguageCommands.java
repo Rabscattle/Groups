@@ -14,7 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 @CommandAlias("language")
-public class LanguageCommands extends BaseCommand {
+public class LanguageCommands extends ABaseCommand {
   private final GroupsPlugin plugin;
   private final MessageFactory messageFactory;
 

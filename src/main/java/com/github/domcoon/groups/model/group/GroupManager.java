@@ -55,12 +55,52 @@ public class GroupManager extends AbstractManager<String, Group> implements Perm
     view.sendView(sender, this.getAll());
   }
 
-  public CompletableFuture<Void> assignGroup(Player player, String group, long expire) {
-    User user = this.plugin.getUserManager().get(player.getUniqueId());
-    return this.assignGroup(user, group, expire);
+  public CompletableFuture<Void> setGroup(String player, String group, long expire) {
+    if (!contains(group)) {
+      throw new PrefixedExceptionBuilder()
+          .setMessage(LangKeys.GROUP_DOES_NOT_EXIST)
+          .createPrefixedException();
+    }
+    return this.plugin
+        .getUserManager()
+        .loadUser(player)
+        .thenApply(
+            user -> {
+              if (user == null) {
+                throw new PrefixedExceptionBuilder()
+                    .setMessage(LangKeys.USER_NOT_EXISTS)
+                    .createPrefixedException();
+              }
+              this.clearGroups(user);
+              return user;
+            })
+        .thenCompose(user -> this.addGroup(user, group, expire));
   }
 
-  public CompletableFuture<Void> assignGroup(User user, String group, long duration) {
+  private CompletableFuture<Void> clearGroups(User user) {
+    Collection<Node> matching = user.getPermissionCache().getMatching(GroupNode.REGEX);
+    for (Node node : matching) {
+      PermissionAssist.removePermission(user, node.getPermission());
+    }
+    return this.storage.saveUser(user);
+  }
+
+  public CompletableFuture<Void> addGroup(String player, String group, long expire) {
+    return this.plugin
+        .getUserManager()
+        .loadUser(player)
+        .thenCompose(
+            (user) -> {
+              if (user == null) {
+                throw new PrefixedExceptionBuilder()
+                    .setMessage(LangKeys.USER_NOT_EXISTS)
+                    .createPrefixedException();
+              }
+              return addGroup(user, group, expire);
+            });
+  }
+
+  public CompletableFuture<Void> addGroup(User user, String group, long duration) {
     GroupNode storedGroup = user.getStoredGroup();
     if (storedGroup != null
         && !storedGroup.isExpired()
@@ -82,6 +122,28 @@ public class GroupManager extends AbstractManager<String, Group> implements Perm
     }
 
     return plugin.getUserManager().setPermission(user, groupNode.toPermissionNode());
+  }
+
+  public CompletableFuture<Void> removeGroup(String target, String group) {
+    if (!contains(group)) {
+      throw new PrefixedExceptionBuilder()
+          .setMessage(LangKeys.GROUP_DOES_NOT_EXIST)
+          .createPrefixedException();
+    }
+
+    return this.plugin
+        .getUserManager()
+        .loadUser(target)
+        .thenCompose(
+            user -> {
+              if (user == null) {
+                throw new PrefixedExceptionBuilder()
+                    .setMessage(LangKeys.USER_NOT_EXISTS)
+                    .createPrefixedException();
+              }
+              return PermissionAssist.removePermission(
+                  user, new GroupNode(group).toPermissionNode().getPermission());
+            });
   }
 
   public Group getGroup(Player player) {
@@ -161,11 +223,7 @@ public class GroupManager extends AbstractManager<String, Group> implements Perm
           .createPrefixedException();
     }
     remove(name);
-    plugin
-        .getUserManager()
-        .getAll()
-        .forEach(
-            user -> this.storage.removeNodeEverywhere("group.%s".formatted(name.toLowerCase())));
+    this.storage.removeNodeEverywhere("group.%s".formatted(name.toLowerCase()));
     return storage
         .deleteGroup(name)
         .whenComplete(

@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 
 @CommandAlias("rank")
 @CommandPermission("groups.user.rank")
-public class RankCommand extends BaseCommand {
+public class RankCommand extends ABaseCommand {
   private final GroupsPlugin plugin;
   private final UserManager userManager;
   private final GroupManager groupManager;

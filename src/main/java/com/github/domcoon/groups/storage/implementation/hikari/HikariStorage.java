@@ -440,7 +440,7 @@ public class HikariStorage implements StorageImplementation {
                 statement.execute();
             }
         }
-
+        // Probably move this to the manager?
         for (User user : this.plugin.getUserManager().getAll()) {
             user.invalidate();
             user.getPermissionCache().invalidate();
