@@ -9,6 +9,7 @@ import com.github.domcoon.groups.model.node.GroupNode;
 import com.github.domcoon.groups.model.node.Node;
 import com.github.domcoon.groups.model.node.NodeBuilder;
 import com.github.domcoon.groups.model.node.PrefixNode;
+import com.github.domcoon.groups.model.node.WeightNode;
 import com.github.domcoon.groups.model.user.User;
 import com.github.domcoon.groups.storage.Storage;
 import com.github.domcoon.groups.util.PermissionAssist;
@@ -272,5 +273,53 @@ public class GroupManager extends AbstractManager<String, Group> implements Perm
           .setMessage(LangKeys.INVALID_PREFIX)
           .createPrefixedException();
     }
+  }
+
+  /**
+   * Adds the prefix and clears all the previous prefixes
+   *
+   * @return
+   */
+  public CompletableFuture<Void> setWeight(String target, int weight) {
+    if (!contains(target)) {
+      throw new PrefixedExceptionBuilder()
+          .setMessage(LangKeys.GROUP_DOES_NOT_EXIST)
+          .createPrefixedException();
+    }
+    Group group = get(target);
+    return clearWeight(group)
+        .thenCompose(unused -> addWeight(group, weight));
+  }
+
+  public CompletableFuture<Void> clearWeight(String group) {
+    if (!contains(group)) {
+      throw new PrefixedExceptionBuilder()
+          .setMessage(LangKeys.GROUP_DOES_NOT_EXIST)
+          .createPrefixedException();
+    }
+    return this.clearWeight(get(group));
+  }
+
+  public CompletableFuture<Void> clearWeight(Group group) {
+    Collection<Node> matching = group.getPermissionCache().getMatching(WeightNode.REGEX);
+    for (Node node : matching) {
+      PermissionAssist.removePermission(group, node.getPermission());
+    }
+    return this.storage.saveGroup(group);
+  }
+
+  public CompletableFuture<Void> addWeight(String group, int weight) {
+    if (!contains(group)) {
+      throw new PrefixedExceptionBuilder()
+          .setMessage(LangKeys.GROUP_DOES_NOT_EXIST)
+          .createPrefixedException();
+    }
+    return addWeight(get(group), weight);
+  }
+
+  public CompletableFuture<Void> addWeight(Group group, int weight) {
+    Node node = new WeightNode(weight).toPermissionNode();
+    return PermissionAssist.setPermission(group, node)
+        .thenCompose((unused) -> this.storage.saveGroup(group));
   }
 }

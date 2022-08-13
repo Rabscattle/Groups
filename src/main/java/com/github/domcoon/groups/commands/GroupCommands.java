@@ -1,6 +1,5 @@
 package com.github.domcoon.groups.commands;
 
-import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
@@ -14,11 +13,8 @@ import com.github.domcoon.groups.GroupsPlugin;
 import com.github.domcoon.groups.PrefixedException;
 import com.github.domcoon.groups.lang.LangKeys;
 import com.github.domcoon.groups.model.group.GroupManager;
-import com.github.domcoon.groups.util.DurationUtil;
 import com.github.domcoon.groups.view.GroupTextView;
-import java.time.format.DateTimeParseException;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 @CommandAlias("group")
 @CommandPermission("groups.admin.groups")
@@ -62,6 +58,42 @@ public class GroupCommands extends ABaseCommand {
   @Subcommand("list")
   public void onView(CommandSender sender) {
     this.groupManager.sendGroupsView(sender, new GroupTextView());
+  }
+
+  @Subcommand("weight")
+  public class WeightCommands extends ABaseCommand {
+    @Subcommand("set")
+    @Syntax("<group> <weight>")
+    public void set(CommandSender sender, String group, int weight) {
+      try {
+        groupManager.setWeight(group, weight);
+        plugin.sendLocalizedMessage(sender, LangKeys.WEIGHT_SET);
+      } catch (PrefixedException ex) {
+        plugin.sendLocalizedMessage(sender, ex.getMessage());
+      }
+    }
+
+    @Subcommand("add")
+    @Syntax("<group> <weight> <prefix>")
+    public void add(CommandSender sender, String group, int weight) {
+      try {
+        groupManager.addWeight(group, weight);
+        plugin.sendLocalizedMessage(sender, LangKeys.WEIGHT_ADDED);
+      } catch (PrefixedException ex) {
+        plugin.sendLocalizedMessage(sender, ex.getMessage());
+      }
+    }
+
+    @Subcommand("clear")
+    @Syntax("<group>")
+    public void clear(CommandSender sender, String group) {
+      try {
+        groupManager.clearWeight(group);
+        plugin.sendLocalizedMessage(sender, LangKeys.WEIGHT_CLEARED);
+      } catch (PrefixedException ex) {
+        plugin.sendLocalizedMessage(sender, ex.getMessage());
+      }
+    }
   }
 
   @Subcommand("prefix")

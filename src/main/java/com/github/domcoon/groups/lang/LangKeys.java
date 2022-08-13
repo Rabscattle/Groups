@@ -23,6 +23,9 @@ public class LangKeys {
   public static final String PREFIX_SET = "prefix-set";
   public static final String PREFIX_ADDED = "prefix-added";
   public static final String PREFIX_CLEARED = "prefix-cleared";
+  public static final String WEIGHT_SET = "weight-set";
+  public static final String WEIGHT_ADDED = "weight-added";
+  public static final String WEIGHT_CLEARED = "weight-cleared";
   public static final String PLUGIN_RELOADED = "plugin-reloaded";
   public static final String USER_RANK_INFO = "user-rank-info";
   public static final String LANGUAGE_NOT_EXISTS = "language-not-exists";
