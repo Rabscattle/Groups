@@ -16,11 +16,12 @@ public abstract class PermissionHolder {
 
   public abstract Object getUniqueId();
 
-  public final boolean hasPermission(String permission) {
+  public boolean hasPermission(String permission) {
     Node exact = getPermissionCache().getExact(permission);
     if (exact != null) {
       return exact.getValue();
     }
+    // TODO: Add Group Nodes for users
     return new WildcardResolver(permissionCache).hasPermission(permission);
   }
 }

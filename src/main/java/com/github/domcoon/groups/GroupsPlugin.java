@@ -14,13 +14,11 @@ import com.github.domcoon.groups.model.group.GroupManager;
 import com.github.domcoon.groups.model.user.UserManager;
 import com.github.domcoon.groups.placeholders.PlaceholderManager;
 import com.github.domcoon.groups.placeholders.PlaceholderPair;
+import com.github.domcoon.groups.scoreboard.ScoreboardManager;
 import com.github.domcoon.groups.sign.SignManager;
 import com.github.domcoon.groups.storage.Storage;
-import javax.swing.Spring;
-import javax.swing.SpringLayout;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -33,6 +31,7 @@ public final class GroupsPlugin extends JavaPlugin {
   private UserManager userManager;
   private PlaceholderManager placeholderManager;
   private SignManager signManager;
+  private ScoreboardManager scoreboardManager;
   private Storage storage;
 
   @Override
@@ -45,6 +44,8 @@ public final class GroupsPlugin extends JavaPlugin {
     this.userManager = new UserManager(this.storage, this);
     this.placeholderManager = new PlaceholderManager(this);
     this.signManager = new SignManager(this, messageFactory);
+    this.scoreboardManager = new ScoreboardManager(this);
+
     this.messageFactory.reloadLanguages();
     this.pluginConfiguration.reloadConfiguration();
 

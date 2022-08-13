@@ -1,8 +1,11 @@
 package com.github.domcoon.groups.listener;
 
 import com.github.domcoon.groups.GroupsPlugin;
+import com.github.domcoon.groups.events.UserLoadedEvent;
 import com.github.domcoon.groups.lang.LangKeys;
+import com.github.domcoon.groups.model.user.User;
 import com.github.domcoon.groups.model.user.UserManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,7 +25,18 @@ public class UserListener implements Listener {
   public void onPlayerJoin(PlayerJoinEvent event) {
     userManager
         .prepareUser(event.getPlayer())
-        .whenComplete((user, throwable) -> this.greet(event.getPlayer()));
+        .whenComplete((user, throwable) -> this.greet(event.getPlayer()))
+        .whenComplete((user, throwable) -> this.callEvent(event.getPlayer(), user));
+  }
+
+  private void callEvent(Player player, User user) {
+    new BukkitRunnable() {
+      @Override
+      public void run() {
+        UserLoadedEvent userLoadedEvent = new UserLoadedEvent(player, user);
+        Bukkit.getPluginManager().callEvent(userLoadedEvent);
+      }
+    }.runTask(plugin);
   }
 
   private void greet(Player player) {
