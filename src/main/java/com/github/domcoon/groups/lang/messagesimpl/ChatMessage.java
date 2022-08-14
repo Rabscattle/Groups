@@ -4,6 +4,7 @@ import com.github.domcoon.groups.lang.Message;
 import com.github.domcoon.groups.placeholders.PlaceholderPair;
 import com.github.domcoon.groups.util.PlaceholderUtil;
 import com.google.common.base.Strings;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 public class ChatMessage implements Message {
@@ -17,6 +18,7 @@ public class ChatMessage implements Message {
   public void sendMessage(CommandSender sender, PlaceholderPair[] values) {
     if (!Strings.isNullOrEmpty(messageTemplate)) {
       String message = PlaceholderUtil.replacePlaceholders(this.messageTemplate, values);
+      message = ChatColor.translateAlternateColorCodes('&', message);
       sender.sendMessage(message);
     }
   }

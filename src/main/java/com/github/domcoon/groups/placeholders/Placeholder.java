@@ -4,5 +4,5 @@ import org.bukkit.entity.Player;
 
 @FunctionalInterface
 public interface Placeholder {
-  String replace(Player player);
+  String getReplacement(Player player);
 }

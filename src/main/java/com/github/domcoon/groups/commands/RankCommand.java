@@ -16,7 +16,7 @@ import com.github.domcoon.groups.util.DurationUtil;
 import org.bukkit.entity.Player;
 
 @CommandAlias("rank")
-@CommandPermission("groups.user.rank")
+//@CommandPermission("groups.user.rank")
 public class RankCommand extends ABaseCommand {
   private final GroupsPlugin plugin;
   private final UserManager userManager;
@@ -48,7 +48,7 @@ public class RankCommand extends ABaseCommand {
       PlaceholderPair.of("{prefix}", group.getPrefix()),
       PlaceholderPair.of("{weight}", group.getWeight() + ""),
       PlaceholderPair.of(
-          "{time-left}", DurationUtil.formatDuration(groupNode.getTimeLeft(), "FOREVER")),
+          "{time-left}", DurationUtil.formatDuration(groupNode.getTimeLeft(), "&eFOREVER")),
     };
     this.plugin.sendLocalizedMessage(player, LangKeys.USER_RANK_INFO, placeholders);
   }

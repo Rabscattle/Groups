@@ -107,7 +107,7 @@ public class GroupManager extends AbstractManager<String, Group> implements Perm
         && !storedGroup.isExpired()
         && group.equalsIgnoreCase(storedGroup.getGroup())) {
       throw new PrefixedExceptionBuilder()
-          .setMessage(LangKeys.GROUP_ALREADY_HAS)
+          .setMessage(LangKeys.USER_GROUP_ALREADY_HAS)
           .createPrefixedException();
     }
 

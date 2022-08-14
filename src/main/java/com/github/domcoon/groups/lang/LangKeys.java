@@ -2,7 +2,7 @@ package com.github.domcoon.groups.lang;
 
 public class LangKeys {
   public static final String GROUP_EXIST = "group-exist";
-  public static final String GROUP_ALREADY_HAS = "group-already-has";
+  public static final String USER_GROUP_ALREADY_HAS = "user-group-already-has";
   public static final String GROUP_DOES_NOT_EXIST = "group-not-exists";
   public static final String USER_GROUP_ADDED = "user-group-added";
   public static final String USER_GROUP_SET = "user-group-set";

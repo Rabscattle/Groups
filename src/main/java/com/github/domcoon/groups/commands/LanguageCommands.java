@@ -24,7 +24,7 @@ public class LanguageCommands extends ABaseCommand {
   }
 
   @Subcommand("set")
-  @CommandPermission("language.set.self")
+  //@CommandPermission("language.set.self")
   @Syntax("<language-key>")
   public void setLanguage(Player player, String language) {
     try {

@@ -9,14 +9,41 @@ import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
+import java.util.logging.Logger;
 import org.bukkit.entity.Player;
 
 public class Storage {
+  private final Logger logger;
   private final StorageImplementation implementation;
 
   public Storage(GroupsPlugin plugin) {
+    this.logger = plugin.getLogger();
     this.implementation = new HikariStorage(plugin);
     this.implementation.preInit();
+  }
+
+  private CompletableFuture<Void> future(Runnable runnable) {
+    return CompletableFuture.runAsync(
+        () -> {
+          try {
+            runnable.run();
+          } catch (Exception e) {
+            this.logger.severe(e.getMessage());
+            throw new CompletionException(e);
+          }
+        });
+  }
+
+  private <T> CompletableFuture<T> future(Callable<T> supplier) {
+    return CompletableFuture.supplyAsync(
+        () -> {
+          try {
+            return supplier.call();
+          } catch (Exception e) {
+            this.logger.severe(e.getMessage());
+            throw new CompletionException(e);
+          }
+        });
   }
 
   public CompletableFuture<Void> saveGroup(Group group) {
@@ -45,30 +72,6 @@ public class Storage {
 
   public void reload() {
     // Not sure how/what to reload yet...
-  }
-
-  private CompletableFuture<Void> future(Runnable runnable) {
-    return CompletableFuture.runAsync(
-        () -> {
-          try {
-            runnable.run();
-          } catch (Exception e) {
-            System.out.println(e);
-            throw new CompletionException(e);
-          }
-        });
-  }
-
-  private <T> CompletableFuture<T> future(Callable<T> supplier) {
-    return CompletableFuture.supplyAsync(
-        () -> {
-          try {
-            return supplier.call();
-          } catch (Exception e) {
-            System.out.println(e);
-            throw new CompletionException(e);
-          }
-        });
   }
 
   public void init() throws Exception {

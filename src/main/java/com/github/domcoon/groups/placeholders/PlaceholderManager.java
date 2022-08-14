@@ -1,7 +1,9 @@
 package com.github.domcoon.groups.placeholders;
 
 import com.github.domcoon.groups.GroupsPlugin;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.HumanEntity;
@@ -33,10 +35,19 @@ public class PlaceholderManager {
     for (Map.Entry<String, Placeholder> entry : this.placeholders.entrySet()) {
       String placeholder = entry.getKey();
       if (message.contains(placeholder)) {
-        String replacement = entry.getValue().replace(player);
+        String replacement = entry.getValue().getReplacement(player);
         message = message.replace(placeholder, replacement);
       }
     }
     return ChatColor.translateAlternateColorCodes('&', message);
+  }
+
+  public PlaceholderPair[] getPlaceholders(Player player) {
+    List<PlaceholderPair> result = new ArrayList<>();
+    this.placeholders.forEach(
+        (s, placeholder) -> {
+          result.add(PlaceholderPair.of(s, placeholder.getReplacement(player)));
+        });
+    return result.toArray(new PlaceholderPair[0]);
   }
 }

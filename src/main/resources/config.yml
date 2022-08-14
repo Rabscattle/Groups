@@ -1,12 +1,3 @@
-# This will reformat your chat messages
-# Placeholders you can use:
-# => {player_group_prefix}
-# => {player_group_name}
-# ...
-chat:
-  enabled: true
-  format: "{player_group_prefix} %s > %s"
-
 storage:
   # Options are MYSQL & MARIADB
   type: MARIADB
@@ -17,3 +8,20 @@ storage:
   user: test
   password: test
 
+# This will reformat your chat messages
+# Placeholders you can use:
+# => {player_group_prefix}
+# => {player_group_name}
+# ...
+chat:
+  enabled: true
+  format: "{player_group_prefix} %s > %s"
+
+# This will format signs
+# containing "group-sign"
+group-signs:
+  enabled: true
+  # Radius where the sign updates to players
+  update-radius: 25
+  # 20 Ticks = 1s. Speed at which updates of signs occur
+  update-tick-speed: 60

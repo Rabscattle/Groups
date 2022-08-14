@@ -34,10 +34,8 @@ public class MessageFactory {
   public void reloadLanguages() {
     this.languages.clear();
 
-    String absolutePath = plugin.getDataFolder().getAbsolutePath() + "/languages";
-    File file = new File(absolutePath);
+    File file = saveDefaults();
     FileUtils.loadDirectory(file, false, this::loadFile);
-
     // Stats
     Logger logger = plugin.getLogger();
     logger.info("Loaded (%d) Languages".formatted(this.languages.size()));
@@ -46,6 +44,16 @@ public class MessageFactory {
           " - Language: (%s) with (%d Messages)"
               .formatted(value.getLanguage(), value.getMessages().size()));
     }
+  }
+
+  private File saveDefaults() {
+    String absolutePath = plugin.getDataFolder().getAbsolutePath() + "/languages";
+    File file = new File(absolutePath);
+    if (!file.exists()) {
+      file.mkdirs();
+    }
+    this.plugin.saveResource("languages/messages-en.yml", false);
+    return file;
   }
 
   private void loadFile(File file, FileConfiguration fileConfiguration) {
@@ -63,6 +71,10 @@ public class MessageFactory {
     if (language == null) {
       sender.sendMessage(message);
       return;
+    }
+
+    if (sender instanceof Player && (values == null || values.length == 0)) {
+      values = this.plugin.getPlaceholderManager().getPlaceholders(((Player) sender));
     }
 
     language.sendMessage(sender, message, values);
