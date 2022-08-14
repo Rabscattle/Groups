@@ -83,6 +83,8 @@ aber im Englischen Format. Bsp: 5d 5s = 5 Tage 5 Sekunden
 
 ### Präfix von der Gruppe soll im Chat und beim Betreten des Servers angezeigt werden
 
+![](img/prefix.png)
+
 ### Wenn der Spieler eine neue Gruppe zugewiesen bekommt, soll diese sich unmittelbar ändern (Spieler soll nicht gekickt werden)
 
 ### Alle Nachrichten sollen in einer Konfigurationsdatei anpassbar sein
@@ -93,13 +95,13 @@ Siehe hierzu den Unterpunkt: Messages
 
 Der Spieler hat die Möglichkeit (sofern er die Berechtigung dazu hat)
 Mit dem Befehl `/rank` folgende Ausgabe (Konfigurierbar) zu erhalten:
-// TODO: Image
+![](img/rank-info.png)
 
 ### Ein oder mehrere Schilde sollen hinzugefügt werden können, die Informationen eines einzelnen Spielers wie Name & Rang anzeigen
 
 Spieler können ein Schild welches folgendes Schlüsselwort enthalten muss: `group-sign`
-aufstellen. Danach formatiert sich das Schild wie folgt (konfigurierbar inklusive Sprache):
-// TODO: Image
+aufstellen. Danach formatiert sich das Schild wie folgt (konfigurierbar inklusive Sprache):<br>
+![](img/sign.png)
 
 ### Alle nötigen Information werden in einer relationalen Datenbank gespeichert (konfigurierbare Texte nicht)
 
@@ -110,7 +112,7 @@ als Datenbank zur verfügung
 
 ### Für eine Gruppe können Berechtigungen festgelegt und sollen dem Spieler dementsprechend zugewiesen werden. Abfrage über #hasPermission sollte funktionieren
 
-Nicht Implementiert. Momentan wird keine Kolleration/Erbe von Usern und deren Gruppen hergestellt
+Nicht Implementiert. Momentan wird keine Beziehung/Erbe von Usern und deren Gruppen der Berechtigungen hergestellt
 
 ### (*) Berechtigung
 
@@ -177,6 +179,7 @@ Im Release Verzeichnis hier in GitHub findet man die neuste Version,
 sowie ein Docker container welchen man ebenfalls benutzen kann.
 
 ### Plugin Version
+
 Um das Plugin in einem eigenen Environment zu benutzen, bedarf
 es vorerst eine vorkonfigurierte Datenbank. Vorkonfiguriert im Sinne von,
 es muss eine Datenbank erstellt werden (damit ist nicht das Aufsetzen einer Verbindung gemeint).
@@ -184,7 +187,5 @@ Ein neustart ist erforderlich um die Verbindung herzustellen.
 Das Plugin sollte einmalig gestartet werden, um die Konfigurationen
 und Ordner zu laden.
 
-
 ### Docker Version
 
-TODO
