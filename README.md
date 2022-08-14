@@ -179,8 +179,9 @@ Im Release Verzeichnis hier in GitHub findet man die neuste Version,
 sowie ein Docker container welchen man ebenfalls benutzen kann.
 
 ### Plugin Version
+https://github.com/domcoon/Groups/releases/download/1.0/groups-1.0-SNAPSHOT-all.jar
 
-Um das Plugin in einem eigenen Environment zu benutzen, bedarf
+Um das Plugin in einer eigenen Umgebung zu benutzen, bedarf
 es vorerst eine vorkonfigurierte Datenbank. Vorkonfiguriert im Sinne von,
 es muss eine Datenbank erstellt werden (damit ist nicht das Aufsetzen einer Verbindung gemeint).
 Ein neustart ist erforderlich um die Verbindung herzustellen.
@@ -188,4 +189,23 @@ Das Plugin sollte einmalig gestartet werden, um die Konfigurationen
 und Ordner zu laden.
 
 ### Docker Version
+
+### Vor-Installation
+Installiere Docker & Docker Compose für dein Betriebssystem
+Befolge alle Schritte von der Seite https://docs.docker.com/get-docker/
+
+### Einrichten
+1. Download: https://github.com/domcoon/Groups/releases/download/1.0/plugin-test-docker.zip
+2. Entpacke die .zip datei
+3. Öffne ein Terminal in dem entpackten Ordner
+4. Starte den Container mit: `docker-compose up -d`
+5. (Optional) zum Einloggen in die Console nutze folgenden befehl: `docker attach plugin-test`
+
+### Beitreten
+Der Server läuft nun auf `localhost:4321` in der Server Version 1.19
+Alle benötigten Datenbanken wurden bereits erstellt und laufen
+auf einem MariaDB Client.
+
+
+
 
