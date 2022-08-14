@@ -7,6 +7,16 @@ Spieler soll sich standardmäßig in einer Gruppe befinden. Ggf. kann diesem ein
 permanent oder für eine gewisse Zeit zugewiesen werden. Alle nötigen Informationen sollen in einer
 relationalen Datenbank gespeichert werden.
 
+## Preamble
+
+Das Plugin ist momentan konzipiert um auf der Version 1.19 zu laufen.
+Die meisten Commands sind unten aufgelistet. Um eine komplette Liste zu erhalten,
+benutzt die Befehle help, um eine genauere Auflistung zu erhalten. Hier sind weitere
+sinnvolle Commands:
+
+- groups reload
+- language set
+
 ## Frameworks & Help
 
 https://github.com/aikar/commands
@@ -58,13 +68,13 @@ Untercommands sind unter anderem:
 
 #### Name
 
-Der Name einer Gruppe ist fest kann nicht verändert werden. Er ist zugleich auch
+Der Name einer Gruppe ist und fest kann nicht verändert worden. Er ist zugleich auch
 Identifikator einer Gruppe
 
 #### Präfix
 
 Präfixe werden über Permissions mit einer bestimmten Syntax geregelt.
-Diese lautet: `prefix.<weight>.<prefix>`. Der Präfix mit der höchsten Gewichtung wird verwendet
+Diese lautet: `prefix.<weight>.<prefix>`. Dem Präfix mit der höchsten Gewichtung wird verwendet
 
 ### Spieler soll einer Gruppe zugewiesen werden können (Permanent und mit einer Zeitangabe)
 
@@ -79,9 +89,9 @@ Untercommands sind unter anderem:
 - user info
 
 Bei allen Kommandos kann eine Zeitangabe mit angegeben werden. Diese
-aber im Englischen Format. Bsp: 5d 5s = 5 Tage 5 Sekunden
+aber im englischen Format. Bsp: 5d 5s = 5 Tage 5 Sekunden
 
-### Präfix von der Gruppe soll im Chat und beim Betreten des Servers angezeigt werden
+### Präfix von der Gruppe soll im Chat und beim Betreten des Servers angezeigt werden<br>
 
 ![](img/prefix.png)
 
@@ -94,7 +104,7 @@ Siehe hierzu den Unterpunkt: Messages
 ### Durch einen Befehl erfährt der Spieler seine aktuelle Gruppe und ggf. wie lange er diese noch hat
 
 Der Spieler hat die Möglichkeit (sofern er die Berechtigung dazu hat)
-Mit dem Befehl `/rank` folgende Ausgabe (Konfigurierbar) zu erhalten:
+mit dem Befehl `/rank` folgende Ausgabe (Konfigurierbar) zu erhalten: <br>
 ![](img/rank-info.png)
 
 ### Ein oder mehrere Schilde sollen hinzugefügt werden können, die Informationen eines einzelnen Spielers wie Name & Rang anzeigen
@@ -112,13 +122,14 @@ als Datenbank zur verfügung
 
 ### Für eine Gruppe können Berechtigungen festgelegt und sollen dem Spieler dementsprechend zugewiesen werden. Abfrage über #hasPermission sollte funktionieren
 
-Nicht Implementiert. Momentan wird keine Beziehung/Erbe von Usern und deren Gruppen der Berechtigungen hergestellt
+Nicht implementiert. Momentan wird keine Beziehung/Erbe von Usern und deren Gruppen der
+Berechtigungen hergestellt
 
 ### (*) Berechtigung
 
 Berechtigungen werden als Wildcards aufgelöst. * Berechtigung würde funktionieren.
 
-### Unterstüzung von mehreren Sprachen
+### Unterstützung von mehreren Sprachen
 
 Siehe hierzu den Unterpunkt: Messages
 
@@ -131,9 +142,15 @@ wird dies nicht in der Aufgabe mit abgegeben.
 ## Messages
 
 <p>
-Das Plugin benutzt ein dynamisch erweiterbares Sprach/Nachrichten System
+Das Plugin benutzt ein dynamisch erweiterbares sprach/Nachrichten System
 und unterstützt beliebig viele Sprachen.
 Dazu erstellt man in dem Ordner `Groups/languages` eine message datei.
+
+### Auswählen einer Sprache
+
+Momentan ist englisch (en) immer die default sprache.
+Damit ein Spieler seine Sprache ändern kann, bedarf es den Befehl:
+`language set <language-code>`. Die Sprache muss vorher konfiguriert sein!
 
 ### Dateiname und Endung
 
@@ -147,7 +164,7 @@ Beispiel (englisch): `messages-en.yml` <br>
 
 ### Befüllen von Sprachen
 
-Zum erstellen seiner eigenen Sprache, schaut man sich die `LangKeys.java` genauer an.
+Zum Erstellen seiner eigenen Sprache, schaut man sich die `LangKeys.java` genauer an.
 Dort stehen alle Nachrichten welche verändert werden können.
 Um nun zum Beispiel die `LangKeys.GREET` (Die Nachricht, die beim Betreten des Servers gesendet
 wird)
@@ -179,6 +196,7 @@ Im Release Verzeichnis hier in GitHub findet man die neuste Version,
 sowie ein Docker container welchen man ebenfalls benutzen kann.
 
 ### Plugin Version
+
 https://github.com/domcoon/Groups/releases/download/1.0/groups-1.0-SNAPSHOT-all.jar
 
 Um das Plugin in einer eigenen Umgebung zu benutzen, bedarf
@@ -191,10 +209,12 @@ und Ordner zu laden.
 ### Docker Version
 
 ### Vor-Installation
+
 Installiere Docker & Docker Compose für dein Betriebssystem
 Befolge alle Schritte von der Seite https://docs.docker.com/get-docker/
 
 ### Einrichten
+
 1. Download: https://github.com/domcoon/Groups/releases/download/1.0/plugin-test-docker.zip
 2. Entpacke die .zip datei
 3. Öffne ein Terminal in dem entpackten Ordner
@@ -202,6 +222,7 @@ Befolge alle Schritte von der Seite https://docs.docker.com/get-docker/
 5. (Optional) zum Einloggen in die Console nutze folgenden befehl: `docker attach plugin-test`
 
 ### Beitreten
+
 Der Server läuft nun auf `localhost:4321` in der Server Version 1.19
 Alle benötigten Datenbanken wurden bereits erstellt und laufen
 auf einem MariaDB Client.
