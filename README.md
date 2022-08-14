@@ -16,6 +16,13 @@ sinnvolle Commands:
 
 - groups reload (Reloaden der Konfigurationsdatei und Messages)
 
+
+Die meisten Nutzer-befhehle und deren Output ist dynamisch anpassbar. Manchmal wurde auf dieser dynamik
+verzichtet (zum Beispiel, bei Admin Befehlen), da dort meistens keine konfigurierbaren nachrichten nötig sind.
+u.a:
+- Beim Command: group list (auflistung aller gruppen, sowie deren permissions und weight)
+- Beim Command: user info [user] (Zeigt informationen über einen User (als admin))
+
 ## Frameworks & Help
 
 https://github.com/aikar/commands
