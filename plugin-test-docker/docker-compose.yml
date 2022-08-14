@@ -1,0 +1,34 @@
+version: "3.9"
+
+volumes:
+  db:
+    driver: local
+
+services:
+  mc:
+    container_name: plugin-test
+    image: itzg/minecraft-server
+    tty: true 
+    stdin_open: true
+    ports:
+      - "4321:25565"
+    volumes:
+    - ./plugins:/data/plugins
+    environment:
+      - EULA=true
+      - TYPE=PAPER
+      - VERSION=1.19
+      - INIT_MEMORY=1G
+      - MAX_MEMORY=3G
+
+  db:
+    image: mariadb
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+    - ./sql:/docker-entrypoint-initdb.d
+    - ./data:/var/lib/mysql
+    expose:
+    - 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: SKw075QNyWfDM82

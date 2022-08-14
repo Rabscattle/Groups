@@ -1,0 +1,79 @@
+group-exist:
+  msg: "&cThis group already exists"
+user-group-already-has:
+  msg: "&cThis user already has this group"
+group-not-exists:
+  msg: "&cThis group does not exists"
+user-group-added:
+  msg: "&aGroup successfully added"
+user-group-set:
+  msg: "&aGroup successfully set"
+user-group-removed:
+  msg: "&aGroup successfully removed"
+group-created:
+  msg: "&aGroup created"
+group-deleted:
+  msg: "&aGroup Deleted"
+greet:
+  msg: "&aWelcome {player_group_prefix} {player_name} &ato our server!"
+node-already-set:
+  msg: "&cThe permission is already set"
+node-not-set:
+  msg: "&cThe permission was not found"
+invalid-duration:
+  msg: "&cInvalid Duration"
+user-not-exists:
+  msg: "&cThat user was not found"
+permission-set:
+  msg: "&aPermission has been set!"
+permission-removed:
+  msg: "&aPermission has been removed!"
+failure-during-set:
+  msg: "&cSomething went wrong during set. &4Check the console"
+failure-during-remove:
+  msg: "&cSomething went wrong during remove. &4Check the console"
+failure-during-load:
+  msg: "&cSomething went wrong during load. &4Check the console"
+invalid-prefix:
+  msg: "&cInvalid Prefix Length"
+prefix-set:
+  msg: "&aPrefix has been set"
+prefix-added:
+  msg: "&aPrefix has been added"
+prefix-cleared:
+  msg: "&aAll prefixes have been removed"
+weight-set:
+  msg: "&aWeight has been set"
+weight-added:
+  msg: "&aWeight has been added"
+weight-cleared:
+  msg: "&aAll weights have been removed"
+plugin-reloaded:
+  msg: "&aPlugin Reloaded"
+
+# Placeholders you can use:
+# => {user}
+# => {group}
+# => {prefix}
+# => {weight}
+# => {time-left}
+user-rank-info:
+  msg: |
+    &3 User: {user}
+    &3 Group: {group}
+    &3 Group Prefix: {prefix}
+    &3 Group Weight: {weight}
+    &3 Time left: {time-left}
+language-not-exists:
+  msg: "&cThis language does not exists"
+language-set:
+  msg: "&aLanguage successfully set"
+
+# Special form of message. This applies to sign containing group-signs
+# Those sign will be reformatted with a list of (4 at max) strings
+# each line is split with a \n
+sign-template:
+  msg: |
+    {player_name}
+    {player_group_name}
+    {player_group_prefix}
