@@ -14,8 +14,7 @@ Die meisten Commands sind unten aufgelistet. Um eine komplette Liste zu erhalten
 benutzt die Befehle help, um eine genauere Auflistung zu erhalten. Hier sind weitere
 sinnvolle Commands:
 
-- groups reload
-- language set
+- groups reload (Reloaden der Konfigurationsdatei und Messages)
 
 ## Frameworks & Help
 
