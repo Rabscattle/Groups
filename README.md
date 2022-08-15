@@ -170,7 +170,7 @@ Beispiel (englisch): `messages-en.yml` <br>
 
 ### Befüllen von Sprachen
 
-Zum Erstellen seiner eigenen Sprache, schaut man sich die `LangKeys.java` genauer an.
+Zum Erstellen seiner eigenen Sprache, schaut man sich die `LangKeys.java` https://github.com/domcoon/Groups/blob/master/src/main/java/com/github/domcoon/groups/lang/LangKeys.java genauer an.
 Dort stehen alle Nachrichten welche verändert werden können.
 Um nun zum Beispiel die `LangKeys.GREET` (Die Nachricht, die beim Betreten des Servers gesendet
 wird)
