@@ -1,63 +1,53 @@
 # Groups
 
-## Aufgabenbeschreibung
+## Task Description
 
-Das Plugin soll als Gruppen/Berechtigungssystem wie zum Beispiel Pex oder LuckyPerms fungieren. Dem
-Spieler soll sich standardmäßig in einer Gruppe befinden. Ggf. kann diesem eine andere Gruppe
-permanent oder für eine gewisse Zeit zugewiesen werden. Alle nötigen Informationen sollen in einer
-relationalen Datenbank gespeichert werden.
+The plugin should function as a group/permission system similar to Pex or LuckyPerms. By default, the player should be in a group. Optionally, they can be assigned to another group permanently or for a certain period. All necessary information should be stored in a relational database.
 
 ## Preamble
 
-Das Plugin ist momentan konzipiert um auf der Version 1.19 zu laufen.
-Die meisten Commands sind unten aufgelistet. Um eine komplette Liste zu erhalten,
-benutzt die Befehle help, um eine genauere Auflistung zu erhalten. Hier sind weitere
-sinnvolle Commands:
+The plugin is currently designed to run on version 1.19. Most commands are listed below. To get a complete list, use the command 'help' for a more detailed listing. Here are some additional useful commands:
 
-- groups reload (Reloaden der Konfigurationsdatei und Messages)
+- groups reload (Reload the configuration file and messages)
 
-
-Die meisten Nutzer-befhehle und deren Output ist dynamisch anpassbar. Manchmal wurde auf dieser dynamik
-verzichtet (zum Beispiel, bei Admin Befehlen), da dort meistens keine konfigurierbaren nachrichten nötig sind.
-u.a:
-- Beim Command: group list (auflistung aller gruppen, sowie deren permissions und weight)
-- Beim Command: user info [user] (Zeigt informationen über einen User (als admin))
+Most user commands and their output are dynamically adjustable. Sometimes, this dynamism has been omitted (for example, in admin commands), as configurable messages are usually not necessary. These include:
+- For the command: group list (listing of all groups, their permissions, and weight)
+- For the command: user info [user] (Shows information about a user (as admin))
 
 ## Frameworks & Help
 
 https://github.com/aikar/commands
 
 <p>
-Für die Commands wird das ACF (Annotation Command Framework) verwendet.
-welches ich im Nachhinein bereue und ich bei gelegenheit
-mit einem eigenen Auswechseln würde.
+The ACF (Annotation Command Framework) is used for the commands.
+which I regret and would replace with my own framework if given the opportunity.
 </p>
 
 https://github.com/JordanOsterberg/JScoreboards
 
 <p>
-Für den Scoreboard Branch (welche eine unfertige Version von 
-Scoreboards und der Tabliste beinhaltet) wurde JScoreboards
-von Jordan Osterberg verwendet.
+For the Scoreboard branch (which includes an unfinished version of
+scoreboards and the tab list), JScoreboards
+by Jordan Osterberg was used.
 </p>
 
 https://github.com/LuckPerms/LuckPerms
 
 <p>
-Aufgrund der bereits jahren lange Arbeit mit LuckPerms habe ich viele 
-Ideen und Konzepte übernommen, kein Code kopiert. Zum Beispiel wird eine ähnliche Struktur
-für die Manager (User & Group), welche ihre Objekte zuerst erstellen und dann von der Datenbank geladen,
-welches ich ganz nett fand. Außerdem haben User und Gruppen 
-keine direkten Variablen (Aus UML Sicht). Sondern alles wird über
-Permissions geregelt, wie zum Beispiel dem Präfix und die Gewichtung
+Due to years of work with LuckPerms, I have adopted many
+ideas and concepts but not copied any code. For example, a similar structure
+for the managers (User & Group), which first create their objects and then load them from the database,
+which I found quite nice. Also, users and groups
+do not have direct variables (from a UML perspective). Instead, everything is controlled through
+permissions, such as the prefix and weighting.
 </p>
 
-## Mindestanforderung
+## Minimum Requirements
 
-### Gruppen können im Spiel erstellt und verwaltet werden
+### Groups can be created and managed in the game
 
-Gruppen werden mit dem Hauptcommand group verwaltet.
-Untercommands sind unter anderem:
+Groups are managed with the main command 'group'.
+Subcommands include:
 
 - group create
 - group delete
@@ -70,22 +60,22 @@ Untercommands sind unter anderem:
 - group perm set
 - group perm remove
 
-### Die Gruppe muss mindestens folgende Eigenschaften haben
+### The group must have at least the following properties
 
 #### Name
 
-Der Name einer Gruppe ist und fest kann nicht verändert worden. Er ist zugleich auch
-Identifikator einer Gruppe
+The name of a group is fixed and cannot be changed. It is also
+the identifier of a group
 
-#### Präfix
+#### Prefix
 
-Präfixe werden über Permissions mit einer bestimmten Syntax geregelt.
-Diese lautet: `prefix.<weight>.<prefix>`. Dem Präfix mit der höchsten Gewichtung wird verwendet
+Prefixes are regulated through permissions with a specific syntax.
+This is: `prefix.<weight>.<prefix>`. The prefix with the highest weight is used.
 
-### Spieler soll einer Gruppe zugewiesen werden können (Permanent und mit einer Zeitangabe)
+### Players should be able to be assigned to a group (permanently and with a time specification)
 
-Spielern/Users werden mit dem Hautpcommand user verwaltet
-Untercommands sind unter anderem:
+Players/Users are managed with the main command 'user'.
+Subcommands include:
 
 - user group set
 - user group remove
@@ -94,87 +84,85 @@ Untercommands sind unter anderem:
 - user perm remove
 - user info
 
-Bei allen Kommandos kann eine Zeitangabe mit angegeben werden. Diese
-aber im englischen Format. Bsp: 5d 5s = 5 Tage 5 Sekunden
+A time specification can be provided with all commands. This
+is in English format. Example: 5d 5s = 5 days 5 seconds
 
-### Präfix von der Gruppe soll im Chat und beim Betreten des Servers angezeigt werden<br>
+### The group's prefix should be displayed in the chat and when entering the server<br>
 
 ![](img/prefix.png)
 
-### Wenn der Spieler eine neue Gruppe zugewiesen bekommt, soll diese sich unmittelbar ändern (Spieler soll nicht gekickt werden)
+### When a player is assigned a new group, it should change immediately (player should not be kicked)
 
-### Alle Nachrichten sollen in einer Konfigurationsdatei anpassbar sein
+### All messages should be customizable in a configuration file
 
-Siehe hierzu den Unterpunkt: Messages
+See the subpoint: Messages
 
-### Durch einen Befehl erfährt der Spieler seine aktuelle Gruppe und ggf. wie lange er diese noch hat
+### Through a command, the player learns his current group and possibly how long he still has it
 
-Der Spieler hat die Möglichkeit (sofern er die Berechtigung dazu hat)
-mit dem Befehl `/rank` folgende Ausgabe (Konfigurierbar) zu erhalten: <br>
+The player has the ability (if they have permission) to receive the following output (configurable) with the command `/rank`: <br>
 ![](img/rank-info.png)
 
-### Ein oder mehrere Schilde sollen hinzugefügt werden können, die Informationen eines einzelnen Spielers wie Name & Rang anzeigen
+### One or more signs should be able to be added that display information about an individual player like name & rank
 
-Spieler können ein Schild welches folgendes Schlüsselwort enthalten muss: `group-sign`
-aufstellen. Danach formatiert sich das Schild wie folgt (konfigurierbar inklusive Sprache):<br>
+Players can place a sign that must contain the keyword `group-sign`.
+After that, the sign formats itself as follows (configurable including language): <br>
 ![](img/sign.png)
 
-### Alle nötigen Information werden in einer relationalen Datenbank gespeichert (konfigurierbare Texte nicht)
+### All necessary information is stored in a relational database (configurable texts are not)
 
-Eine bereits erstellte Datenbank ist erforderlich. Momentan steht dem Benutzer nur MYSQL und MARIADB
-als Datenbank zur verfügung
+A pre-existing database is required. Currently, the user only has MYSQL and MARIADB
+as database options
 
-## Bonus Aufgaben
+## Bonus Tasks
 
-### Für eine Gruppe können Berechtigungen festgelegt und sollen dem Spieler dementsprechend zugewiesen werden. Abfrage über #hasPermission sollte funktionieren
+### Permissions can be set for a group and should be assigned to the player accordingly. Query via #hasPermission should work
 
-Nicht implementiert. Momentan wird keine Beziehung/Erbe von Usern und deren Gruppen der
-Berechtigungen hergestellt
+Not implemented. Currently, there is no relationship/inheritance between users and their groups for
+permissions
 
-### (*) Berechtigung
+### (*) Permission
 
-Berechtigungen werden als Wildcards aufgelöst. * Berechtigung würde funktionieren.
+Permissions are resolved as wildcards. * Permission would work.
 
-### Unterstützung von mehreren Sprachen
+### Support for multiple languages
 
-Siehe hierzu den Unterpunkt: Messages
+See the subpoint: Messages
 
-### Tabliste und Scoreboard
+### Tab list and scoreboard
 
-Beides sind im Branch scoreboard implementiert. Doch aufgrund der instabilität des genutzten
-Frameworks
-wird dies nicht in der Aufgabe mit abgegeben.
+Both are implemented in the scoreboard branch. However, due to the instability of the used
+framework,
+this is not included in the task.
 
 ## Messages
 
 <p>
-Das Plugin benutzt ein dynamisch erweiterbares sprach/Nachrichten System
-und unterstützt beliebig viele Sprachen.
-Dazu erstellt man in dem Ordner `Groups/languages` eine message datei.
+The plugin uses a dynamically expandable language/message system
+and supports any number of languages.
+To do this, create a message file in the `Groups/languages` folder.
 
-### Auswählen einer Sprache
+### Selecting a language
 
-Momentan ist englisch (en) immer die default sprache.
-Damit ein Spieler seine Sprache ändern kann, bedarf es den Befehl:
-`language set <language-code>`. Die Sprache muss vorher konfiguriert sein!
+Currently, English (en) is always the default language.
+For a player to change their language, the command is needed:
+`language set <language-code>`. The language must be configured beforehand!
 
-### Dateiname und Endung
+### Filename and extension
 
 <p>
-Der Name dieser Datei muss einem bestimmten Format entsprechen, um von dem
-System erkannt zu werden. Das format sieht wie folgt aus: <br>
+The name of this file must follow a certain format to be recognized by the
+system. The format looks like this: <br>
 
 Format: `messages-(language-code).yml` <br>
-Beispiel (englisch): `messages-en.yml` <br>
+Example (English): `messages-en.yml` <br>
 </p>
 
-### Befüllen von Sprachen
+### Populating languages
 
-Zum Erstellen seiner eigenen Sprache, schaut man sich die `LangKeys.java` https://github.com/domcoon/Groups/blob/master/src/main/java/com/github/domcoon/groups/lang/LangKeys.java genauer an.
-Dort stehen alle Nachrichten welche verändert werden können.
-Um nun zum Beispiel die `LangKeys.GREET` (Die Nachricht, die beim Betreten des Servers gesendet
-wird)
-anzupassen, tut man das wie folgt:
+To create your own language, look at the `LangKeys.java` https://github.com/domcoon/Groups/blob/master/src/main/java/com/github/domcoon/groups/lang/LangKeys.java more closely.
+There are all messages that can be changed.
+To customize, for example, the `LangKeys.GREET` (The message sent when entering the server),
+do the following:
 
 ```yml
 #messages-en.yml
@@ -185,54 +173,49 @@ greet:
 ```yml
 #messages-de.yml
 greet:
-  # Nachricht wird nicht gesendet, sollte der Inhalt leer sein!
+  # Message will not be sent if the content is empty!
   msg: ""
-  # Erstellen von Titeln
+  # Creating titles
   title:
-    title: "Willkommen"
-    subtitle: "Auf dem Server"
+    title: "Welcome"
+    subtitle: "To the server"
 ```
 
-Momentan gibt es zwei Arten von Nachrichten, welche man erstellen kann.
-Chat Nachrichten und Titel. Die beiden sollten selbsterklärend sein.
+Currently, there are two types of messages that can be created.
+Chat messages and titles. Both should be self-explanatory.
 
 ## Setup
 
-Im Release Verzeichnis hier in GitHub findet man die neuste Version,
-sowie ein Docker container welchen man ebenfalls benutzen kann.
+In the release directory here on GitHub, you will find the latest version,
+as well as a Docker container which you can also use.
 
 ### Plugin Version
 
 https://github.com/domcoon/Groups/releases/download/1.0/groups-1.0-SNAPSHOT-all.jar
 
-Um das Plugin in einer eigenen Umgebung zu benutzen, bedarf
-es vorerst eine vorkonfigurierte Datenbank. Vorkonfiguriert im Sinne von,
-es muss eine Datenbank erstellt werden (damit ist nicht das Aufsetzen einer Verbindung gemeint).
-Ein neustart ist erforderlich um die Verbindung herzustellen.
-Das Plugin sollte einmalig gestartet werden, um die Konfigurationen
-und Ordner zu laden.
+To use the plugin in your own environment, a pre-configured database is required initially. Pre-configured in the sense that
+a database needs to be created (this does not mean setting up a connection).
+A restart is required to establish the connection.
+The plugin should be started once to load the configurations
+and folders.
 
 ### Docker Version
 
-### Vor-Installation
+### Pre-Installation
 
-Installiere Docker & Docker Compose für dein Betriebssystem
-Befolge alle Schritte von der Seite https://docs.docker.com/get-docker/
+Install Docker & Docker Compose for your operating system
+Follow all steps from the page https://docs.docker.com/get-docker/
 
-### Einrichten
+### Setup
 
 1. Download: https://github.com/domcoon/Groups/releases/download/1.0/plugin-test-docker.zip
-2. Entpacke die .zip datei
-3. Öffne ein Terminal in dem entpackten Ordner
-4. Starte den Container mit: `docker-compose up -d`
-5. (Optional) zum Einloggen in die Console nutze folgenden befehl: `docker attach plugin-test`
+2. Unzip the .zip file
+3. Open a terminal in the unpacked folder
+4. Start the container with: `docker-compose up -d`
+5. (Optional) to log in to the console, use the following command: `docker attach plugin-test`
 
-### Beitreten
+### Joining
 
-Der Server läuft nun auf `localhost:4321` in der Server Version 1.19
-Alle benötigten Datenbanken wurden bereits erstellt und laufen
-auf einem MariaDB Client.
-
-
-
-
+The server is now running on `localhost:4321` in server version 1.19
+All necessary databases have already been created and are running
+on a MariaDB client.
