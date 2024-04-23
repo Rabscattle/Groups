@@ -159,7 +159,7 @@ Example (English): `messages-en.yml` <br>
 
 ### Populating languages
 
-To create your own language, look at the `LangKeys.java` https://github.com/domcoon/Groups/blob/master/src/main/java/com/github/domcoon/groups/lang/LangKeys.java more closely.
+To create your own language, look at the `LangKeys.java` https://github.com/dschreid/Groups/blob/master/src/main/java/com/github/dschreid/groups/lang/LangKeys.java more closely.
 There are all messages that can be changed.
 To customize, for example, the `LangKeys.GREET` (The message sent when entering the server),
 do the following:
@@ -177,8 +177,8 @@ greet:
   msg: ""
   # Creating titles
   title:
-    title: "Welcome"
-    subtitle: "To the server"
+    title: "Wilkommen"
+    subtitle: "Auf dem Server!"
 ```
 
 Currently, there are two types of messages that can be created.
@@ -191,7 +191,7 @@ as well as a Docker container which you can also use.
 
 ### Plugin Version
 
-https://github.com/domcoon/Groups/releases/download/1.0/groups-1.0-SNAPSHOT-all.jar
+https://github.com/dschreid/Groups/releases/download/1.0/groups-1.0-SNAPSHOT-all.jar
 
 To use the plugin in your own environment, a pre-configured database is required initially. Pre-configured in the sense that
 a database needs to be created (this does not mean setting up a connection).
@@ -208,7 +208,7 @@ Follow all steps from the page https://docs.docker.com/get-docker/
 
 ### Setup
 
-1. Download: https://github.com/domcoon/Groups/releases/download/1.0/plugin-test-docker.zip
+1. Download: https://github.com/dschreid/Groups/releases/download/1.0/plugin-test-docker.zip
 2. Unzip the .zip file
 3. Open a terminal in the unpacked folder
 4. Start the container with: `docker-compose up -d`
